@@ -1,1 +1,152 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>Untitled</title><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"><link rel="stylesheet" href="assets/css/styles.min.css"></head><body style="background: rgb(255,255,255);"><script src="assets/bootstrap/js/bootstrap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script><script src="assets/js/script.min.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="assets/css/show.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="background: rgb(255,255,255);">
+    <div style="width: 100%;background: url(&quot;https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1170&amp;q=80&quot;);"><section>
+    </br>
+    <h1 style="color: white" align="center">Diary</h1>
+        <div id="message" style="background-color: black;opacity:0.75;color: white"> </div>
+        <div class="input">
+            <textarea style="width: 100%;background-color: black;opacity:0.75;color: white" name="" id="txt" cols="30" rows="10" value="" placeholder="Please enter the content, use </br> line breaks, or use other html code to insert custom content, such as img src=1.png Insert a picture file named 1.png"></textarea>
+            <input type="button" value="save" style="width: 100%;background-color:white;opacity: 0.5">
+            <h5 style="color:black;font-size: 10px" align="center">BINKLINGS is front-end server only, so everything you type is only saved in your local browser cache <a href="https://unsplash.com/photos/RwHv7LgeC7s" style="color:black"> Background image posted by Johannes Plenio on unsplash.com</a></h5>
+    </section>
+</div>
+
+<script>
+  
+
+
+ let user = sessionStorage.getItem("name");
+
+
+
+ const btn = document.querySelector('[value="save"]');
+
+ let str = '', time;
+
+
+
+ let index = 0;
+
+ 
+
+
+
+ btn.addEventListener('click', function () {
+
+
+
+     let arr1 = JSON.parse(localStorage.getItem('comment'));
+
+     if (arr1 instanceof Array && arr1.length) {
+
+         index = arr1[arr1.length - 1].id + 1;
+
+     } else {
+
+         arr1=[];
+
+         index = 1;
+
+     }
+
+ 
+
+     str = txt.value;
+
+     if (str) {
+
+         time = date();
+
+         let obj = {
+
+             id: index,
+
+             "time": time,
+
+             "name": user,
+
+             "content": str
+
+         }
+
+         arr1.push(obj);
+
+         localStorage.setItem('comment', JSON.stringify(arr1));
+
+         render();
+
+         txt.value = '';
+
+     }
+
+ })
+
+ message.addEventListener('click', function (event) {
+
+     if (event.target.innerText == 'del') {
+
+         let id = event.target.dataset.id;
+
+         let arr1 = JSON.parse(localStorage.getItem('comment'));
+
+         let result = arr1.filter(item => item.id != id);
+
+         localStorage.setItem('comment', JSON.stringify(result));
+
+         render() 
+
+     }
+
+ })
+
+ function render() {
+
+     message.innerHTML='';
+
+     let arr1 = JSON.parse(localStorage.getItem('comment'));
+
+     for (let item of arr1) {
+
+         let div = document.createElement(`div`);
+
+         div.innerHTML = ` <div class='top'><span>${item.name}</span> <span>${item.time}</span></div>`;
+
+         div.innerHTML += ` <div class='top'><span>${item.content}</span> <button data-id=${item.id} style="background-color:red;color: white;opacity: 0.55">del</button></div>`; 
+         
+         message.appendChild(div);
+
+     }
+
+ }
+
+ render();
+
+ function date() {
+
+     let myDate = new Date()
+
+     return `${myDate.toLocaleDateString()} ${mytime = myDate.toLocaleTimeString()}`
+
+ }
+
+ </script></div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="assets/js/show.js"></script>
+    <script src="assets/js/teach.js"></script>
+</body>
+
+</html>
