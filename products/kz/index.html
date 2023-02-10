@@ -1,40 +1,379 @@
-<style>
-button {
-  background-image: linear-gradient(to right, #ff0099, #493240);
-  border: none;
-  border-radius: 4px;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 10px 20px;
-  position: relative;
-  transition: all 0.3s;
-}
-button:after {
-  background-color: #ffffff;
-  content: "";
-  height: 10px;
-  width: 10px;
-  border-radius: 50%;
-  position: absolute;
-  opacity: 0;
-  transform: scale(0.5, 0.5);
-  transition: all 0.3s;
-}
-button:hover:after {
-  opacity: 1;
-  transform: scale(4, 4);
-  left: 50%;
-  top: 50%;
-}
-button:active {
-  box-shadow: inset 0 0 10px #000000;
-}
-</style>
-<body bgcolor="#000000">
-<br>
-<h1 style="color: white;" align="center">BKLS自动控制</h1>
-<div align="center">
-<button onclick="window.location.href='https://github.com/binklings/BKLS-Auto-Ctrl/blob/main/BKLS%E8%87%AA%E5%8A%A8%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7_v1.0.6.apk'">通过Github.com下载</button>
-<button onclick="window.location.href='https://wwpl.lanzoue.com/b031zrk8f'">通过蓝奏云下载 密码81xz</button>
+<html>
+
+<head>
+
+    <style>
+
+        /* 页面背景 */
+
+        body {
+
+            background-image: radial-gradient(closest-side at 50% 50%, darkblue, black);
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
+
+            background-color: black
+
+        }
+
+        /* 白色导航栏 */
+
+        .navbar {
+
+            position: fixed;
+
+            left: 20px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 10px;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        /* 按钮 */
+
+        .navbar button {
+
+            background-color: white;
+
+            border: none;
+
+            color: black;
+
+            padding: 10px 20px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            font-size: 16px;
+
+            margin: 4px 0;
+
+            cursor: pointer;
+
+        }
+
+        /* 鼠标悬停按钮 */
+
+        .navbar button:hover {
+
+            background-color: black;
+
+            color: white;
+
+        }
+
+        
+
+        /* iframe */
+
+        #start {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            visibility: visible;
+
+            opacity: 1;
+
+            transition: opacity 2s;
+
+            z-index: 999;
+
+        }
+
+	/* 占位 div */
+
+        #placeholder {
+
+            width: 100%;
+
+            height: 40%;
+
+            top: 0;
+
+            left: 0;
+
+            background-color: transparent;
+
+	    }
+
+    </style>
+
+</head>
+
+<body>
+
+ 
+
+ 
+
+<!-- 开场特效 -->
+
+<iframe id="start" src="enter.html"></iframe>
+
+<script>
+
+                setTimeout(function() {
+
+            var iframe = document.getElementById("start");
+
+            iframe.style.opacity = "0";
+
+            setTimeout(function() {
+
+                iframe.parentNode.removeChild(start);
+
+            }, 3000);
+
+        }, 3000);
+
+</script>
+
+	
+
+	
+
+	
+
+   
+
+    
+
+    
+
+	    <!-- 首页 -->
+
+<div id="placeholder"></div>
+
+<h1 style="color: white" align="center">BKLS自动控制</h1>
+
+<h3 style="color: white" align="center">v下滑探索更多v</h3>
+
+<div style="width: 100%; height: 60%"></div>
+
+<h2 style="color: white" align="center">更多智能</h2><h2 style="color: white" align="center">更加快捷</h2><h2 style="color: white" align="center">更加强大</h2>
+
+<div style="width: 100%; height: 60%"></div>
+
+<div style="width: 100%; background-color: floralwhite" align="center">
+
+ </br></br>
+
+ 
+
+<div style="width: 80%" align="center" id="2">
+
+<h1 style="color: black" align="center">DIY连点器</h1>
+
+</br>
+
+<h3 style="color: black" align="center">功能丰富而强大的专业点击脚本,支持多种循环逻辑判定语句,内置OCR文字识别系统,可直接识别屏幕文字并点击匹配按钮</h3>
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">自动收益</h1>
+
+</br>
+
+<h3 style="color: black" align="center">自动控制收益性软件,解放双手,坐享其成.支持自定义任务细节和执行选项,使用OCR适配各种机型和屏幕大小.通过智能逻辑判断当前页面内容,高容错率,切换页面后可AI自动恢复,支持root权限启动</h3>
+
 </div>
+
+ 
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">系统辅助</h1>
+
+</br>
+
+<h3 style="color: black" align="center">自动完成应用缓存清理等繁琐任务,无需手动点开应用详情,免root即可快速高效的释放垃圾缓存空间</h3>
+
+</div>
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">永久免费 无广告</h1>
+
+</div>
+
+</br></br></br></br>
+
+</div>
+
+<div style="width: 90%; height:35% ; background-color: black" align="center" id="download">
+
+ </br></br>
+
+<h1 style="color: white" align="center">准备齐全 立即下载</h1>
+
+</br></br>
+
+<style>
+
+#button {
+
+  background-image: linear-gradient(to right, #ff0099, #493240);
+
+  border: none;
+
+  border-radius: 4px;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  padding: 10px 20px;
+
+  position: relative;
+
+  transition: all 0.3s;
+
+}
+
+#button:after {
+
+  background-color: #ffffff;
+
+  content: "";
+
+  height: 10px;
+
+  width: 10px;
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  opacity: 0;
+
+  transform: scale(0.5, 0.5);
+
+  transition: all 0.3s;
+
+}
+
+#button:hover:after {
+
+  opacity: 1;
+
+  transform: scale(4, 4);
+
+  left: 50%;
+
+  top: 50%;
+
+}
+
+#button:active {
+
+  box-shadow: inset 0 0 10px #000000;
+
+}
+
+</style>
+
+<div align="center">
+
+<button id="button" onclick="window.location.href='https://github.com/binklings/BKLS-Auto-Ctrl/blob/main/BKLS%E8%87%AA%E5%8A%A8%E6%8E%A7%E5%88%B6%E5%B7%A5%E5%85%B7_v1.0.6.apk'">通过Github.com下载</button></br></br>
+
+<button id="button" onclick="window.location.href='https://wwpl.lanzoue.com/b031zrk8f'">通过蓝奏云下载 密码81xz</button>
+
+</div>
+
+</div>
+
+</br></br></br></br>
+
+</div>
+
+</br></br></br></br>
+
+<div id="qa">
+
+<h1 style="color: white" align="center">Q & A</h1>
+
+	</br></br>
+
+<h3 style="color: white" align="center">Q 在视频页显示找不到目标或没有打开任务页面怎么办</br>
+
+A 请升级到最新版本,如有控制台遮挡,请关闭.若问题仍未解决,请尝试改换其它型号手机或系统</br></br>
+
+Q 广告无法自动关闭怎么办</br>
+
+A 请升级到最新版本,如有控制台遮挡,请关闭.尝试重新启动服务,检查日志信息,或启动开发者模式监测</br></br>
+
+Q 视频不滑动怎么办</br>
+
+A 请升级到最新版本,如有控制台遮挡,请关闭,请打开软件自定义设置界面,根据手机屏幕大小调整合适的y轴滑动坐标(单位为像素)</br></br>
+
+Q 逛街滑动报错怎么办</br>
+
+A 请清除应用数据,然后点开软件的自定义设置,再点击保存</br></br>
+
+Q 点开自定义设置闪退怎么办</br>
+
+A 请清除应用数据再尝试</br></br>
+
+如问题仍未解决,联系开发者</h3></br></br></br>
+
+</div>
+
+<h3 style="color: white" align="center">【BKLS自动控制工具官方讨论群1】：https://jq.qq.com/?_wv=1027&k=UsDqb23k</br>【BKLS自动控制工具官方内测群】：https://jq.qq.com/?_wv=1027&k=BPnJduoi</h3>
+
+	
+
+    <!-- 页面其它内容 -->
+
+    <div class="navbar">
+
+        <a href="#placeholder"><button>首页</button></a>
+
+        <a href="#2"><button>简介</button></a>
+
+        <a href="#download"><button>下载</button></a>
+
+        <button href="qa">答疑</button>
+
+        <button>群聊</button>
+
+    </div>
+
+</body>
+
+</html>
