@@ -1,0 +1,10 @@
+.wrapper{height:100vh;display:flex;align-items:center;justify-content:center;}.code-text{width:350px;animation:typing 2s steps(30),blink .5s step-end infinite alternate;white-space:nowrap;overflow:hidden;border-right:3px solid;font-family:monospace;font-size:20px;position:relative;color:white}@keyframes typing{0%{width:0;}100%{width:350px;}}@keyframes blink{50%{border-color:transparent;}}
+
+*{
+
+    margin : 0;
+
+    padding : 0;
+
+}
+
