@@ -1,1 +1,363 @@
+<html>
 
+<head>
+
+    <style>
+
+        /* 页面背景 */
+
+        body {
+
+            background-image: radial-gradient(closest-side at 50% 50%, darkblue, black);
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            background-attachment: fixed;
+
+            background-color: black
+
+        }
+
+        /* 白色导航栏 */
+
+        .navbar {
+
+            position: fixed;
+
+            left: 20px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 10px;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+        /* 按钮 */
+
+        .navbar button {
+
+            background-color: white;
+
+            border: none;
+
+            color: black;
+
+            padding: 10px 20px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            font-size: 16px;
+
+            margin: 4px 0;
+
+            cursor: pointer;
+
+        }
+
+        /* 鼠标悬停按钮 */
+
+        .navbar button:hover {
+
+            background-color: black;
+
+            color: white;
+
+        }
+
+        
+
+        /* iframe */
+
+        #start {
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            visibility: visible;
+
+            opacity: 1;
+
+            transition: opacity 2s;
+
+            z-index: 999;
+
+        }
+
+	/* 占位 div */
+
+        #placeholder {
+
+            width: 100%;
+
+            height: 40%;
+
+            top: 0;
+
+            left: 0;
+
+            background-color: transparent;
+
+	    }
+
+    </style>
+
+</head>
+
+<body>
+
+ 
+
+ 
+
+<!-- 开场特效 -->
+
+<iframe id="start" src="enter.html"></iframe>
+
+<script>
+
+                setTimeout(function() {
+
+            var iframe = document.getElementById("start");
+
+            iframe.style.opacity = "0";
+
+            setTimeout(function() {
+
+                iframe.parentNode.removeChild(start);
+
+            }, 3000);
+
+        }, 3000);
+
+</script>
+
+	
+
+	
+
+	
+
+   
+
+    
+
+    
+
+	    <!-- 首页 -->
+
+<div id="placeholder"></div>
+
+<h1 style="color: white" align="center">学习作战X平台</h1>
+
+<h3 style="color: white" align="center">v下滑探索更多v</h3>
+
+<div style="width: 100%; height: 60%"></div>
+
+<h2 style="color: white" align="center">全新版本</h2><h2 style="color: white" align="center">全新功能</h2><h2 style="color: white" align="center">全新应用</h2>
+
+<div style="width: 100%; height: 60%"></div>
+
+<div style="width: 100%; background-color: floralwhite" align="center">
+
+ </br></br>
+
+ 
+
+<div style="width: 80%" align="center" id="2">
+
+<h1 style="color: black" align="center">试卷系统</h1>
+
+</br>
+
+<h3 style="color: black" align="center">免费云评测试卷系统,自动出分</h3>
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">战斗玩法</h1>
+
+</br>
+
+<h3 style="color: black" align="center">内部测试版本,该功能正在维护</h3>
+
+</div>
+
+ 
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">轻松管理</h1>
+
+</br>
+
+<h3 style="color: black" align="center">内部测试版本,该功能正在维护</h3>
+
+</div>
+
+</br></br></br></br>
+
+<div style="width: 80%" align="center">
+
+<h1 style="color: black" align="center">永久免费 不跑路</h1>
+
+</div>
+
+</br></br></br></br>
+
+</div>
+
+<div style="width: 90%; height:35% ; background-color: black" align="center" id="download">
+
+ </br></br>
+
+<h1 style="color: white" align="center">准备齐全 立即下载</h1>
+
+</br></br>
+
+<style>
+
+#button {
+
+  background-image: linear-gradient(to right, #ff0099, #493240);
+
+  border: none;
+
+  border-radius: 4px;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  padding: 10px 20px;
+
+  position: relative;
+
+  transition: all 0.3s;
+
+}
+
+#button:after {
+
+  background-color: #ffffff;
+
+  content: "";
+
+  height: 10px;
+
+  width: 10px;
+
+  border-radius: 50%;
+
+  position: absolute;
+
+  opacity: 0;
+
+  transform: scale(0.5, 0.5);
+
+  transition: all 0.3s;
+
+}
+
+#button:hover:after {
+
+  opacity: 1;
+
+  transform: scale(4, 4);
+
+  left: 50%;
+
+  top: 50%;
+
+}
+
+#button:active {
+
+  box-shadow: inset 0 0 10px #000000;
+
+}
+
+</style>
+
+<div align="center">
+
+<button id="button">Github下载通道已关闭</button></br></br>
+
+<button id="button" onclick="window.location.href='https://wwpl.lanzoue.com/b0324iqwb'">通过蓝奏云下载 密码1234</button>
+
+</div>
+
+</div>
+
+</br></br></br></br>
+
+</div>
+
+</br></br></br></br>
+
+<div id="qa">
+
+<h1 style="color: white" align="center">Q & A</h1>
+
+	</br></br>
+
+<h3 style="color: white" align="center">
+
+ 暂无问答信息
+
+</h3></br></br></br>
+
+</div>
+
+<h3 style="color: white" align="center">Made by BINKLINGS内部试用,切勿外传</h3>
+
+	
+
+    <!-- 页面其它内容 -->
+
+    <div class="navbar">
+
+        <a href="#placeholder"><button>首页</button></a>
+
+        <a href="#2"><button>简介</button></a>
+
+        <a href="#download"><button>下载</button></a>
+
+        <button href="qa">答疑</button>
+
+        <button>更多</button>
+
+    </div>
+
+</body>
+
+</html>
