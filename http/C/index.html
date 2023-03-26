@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>welcome to BINKLINGS</title>
+    <meta name="description" content="BINKLINGS official website">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark.css">
+</head>
+
+<body style="background: rgb(0,0,0);">
+ 
+ 
+ <style>
+ #start {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s;
+            z-index: 999;
+            background-color: black
+        }
+        
+ </style>
+ <div id="start"></div>
+ <script>
+                setTimeout(function() {
+            var iframe = document.getElementById("start");
+            iframe.style.opacity = "0";
+            setTimeout(function() {
+                iframe.parentNode.removeChild(start);
+            }, 1000);
+        }, 0000);
+        
+        function go(){
+         window.location.href='#go';
+         setTimeout("javascript:location.href='news/index.html'", 1000);
+        }
+        
+        function go2(){
+         window.location.href='#go';
+         setTimeout("javascript:location.href='xxx'", 1000);
+        }
+        
+        function go3(){
+         window.location.href='#go';
+         setTimeout("javascript:location.href='bridge/github.html'", 1000);
+        }
+ </script>
+ 
+ 
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="text-align: center;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="https://www.binklings.com/"><span style="font-size: 25px;">BINKLINGS · BKL Editor</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-5">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="https://www.binklings.com/">Home</a></li>
+                    <li class="nav-item" onclick="go2()"><a class="nav-link">docs</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="Other.html">Other</a>
+                        <div class="dropdown-menu"><a class="dropdown-item" href="#"></a><a class="dropdown-item" data-aos="zoom-in-down" href="Other.html">| Other</a>
+                            <h6 class="dropdown-header" data-aos="zoom-in-down">-Contact</h6><a class="dropdown-item" data-aos="zoom-in-down" href="https://space.bilibili.com/532918134">Bilibili</a><a class="dropdown-item" data-aos="zoom-in-down" href="https://join.skype.com/u7TyGulYfdCN">Skype</a>
+                        </div>
+                    </li>
+                </ul><a class="btn btn-primary ms-md-2" role="button" href="#">X</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 style="text-align: center;color: rgb(0,0,0);">.</h1>
+        <h1 data-aos="fade-up" style="color: rgb(155,205,255);text-align: center;font-weight: bold;">Welcome to BKL Editor!</h1><span data-aos="fade" data-aos-delay="100" style="font-size: 30px;text-align: center;"><span style="color: rgb(255, 255, 255);"></span><br></span>
+        <div class="card" data-aos="fade">
+            <div class="card-header" data-aos="zoom-in" data-aos-delay="150">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item"><a class="nav-link active">Latest Information</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="go()">Learn more</a></li>
+                    <li class="nav-item"></li>
+                </ul>
+            </div>
+            <div class="card-body" data-aos="fade" data-aos-delay="200" style="background: #529bf1;">
+                <h4 class="card-title" data-aos="fade-up" data-aos-delay="250" style="color: rgb(255,255,255);">1.0.0 Beta is available</h4>
+                <p class="card-text" data-aos="fade-up" data-aos-delay="300"><strong>BKL Editor is a free and open source front-end web page (html5, css3, JavaScript) editor. Support HTML CSS visual real-time design and JS blueprint modular editing.</strong><br></p><a class="btn btn-primary" role="button" data-aos="fade-up" data-aos-delay="350" style="background: rgb(0,0,0);" href="xxx">Website</a>
+            </div>
+        </div>
+        <h1 style="text-align: center;color: rgb(0,0,0);">.</h1>
+        <h1 data-aos="fade-up" data-aos-delay="400" style="color: rgb(155,205,255);text-align: center;font-weight: bold;">BKL Editor in the BINKLINGS product ecosystem</h1>
+        <div class="card" data-aos="fade" data-aos-delay="500">
+            <div class="card-header" data-aos="zoom-in" data-aos-delay="100">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item"><a class="nav-link active">Links</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">-</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">-</a></li>
+                </ul>
+            </div>
+            <div class="card-body" data-aos="fade" data-aos-delay="150" style="background: #529bf1;">
+                <a class="btn btn-primary" role="button" data-aos="fade-up" data-aos-delay="300" style="background: rgb(0,0,0);" onclick="go3()">Open source on Github</a>
+                <a class="btn btn-primary" role="button" data-aos="fade-up" data-aos-delay="300" style="background: rgb(0,0,0);" href="https://space.bilibili.com/532918134/channel/collectiondetail?sid=441702&amp;ctype=0">Bilibili Channel</a>
+            </div>
+        </div>
+        <div class="card"></div>
+        <h1 style="text-align: center;color: rgb(0,0,0);">.</h1>
+        <h1 style="text-align: center;color: rgb(0,0,0);">.</h1>
+        <h1 style="text-align: center;color: rgb(0,0,0);">.</h1>
+    </div>
+    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br><div id="go"></div>
+    <h1 style="color: black">.</h1>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+</body>
+
+</html>
