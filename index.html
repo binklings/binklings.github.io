@@ -40,15 +40,15 @@
     <h3 id="now" align="center" style="color: white"/>
     <p id="days" align="center" style="color: white"></p>
     <script>
-        // 指定日期（格式：年/月/日）
-        var establishDate = new Date("2022/10/08");
-
-        // 计算今天距离指定日期的天数
         var today = new Date();
-        var diffTime = Math.abs(today - establishDate);
-        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        // 设置 <p> 元素的内容
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth();
+        var todayDate = today.getDate();
+        var t1 = Date.UTC(2016, 7, 8);
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate);
+        var diff = t2 - t1;
+        var diffDays = Math.floor(diff / days);
+	// 设置 <p> 元素的内容
         var p = document.getElementById("days");
         p.innerText = "Today is the " + diffDays + " day of establishment of BINKLINGS.com";
         
