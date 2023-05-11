@@ -1,109 +1,496 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>welcome to BINKLINGS</title>
-    <meta name="description" content="BINKLINGS official website">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3" style="text-align: center;">
-        <div class="container"><a class="navbar-brand d-flex align-items-center"><span data-aos="slide-right" style="font-size: 25px;"><span style="color: rgb(255, 241, 165);">BINKLINGS</span></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-5">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"></li>
-                    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="Other.html">Other</a>
-                        <div class="dropdown-menu"><a class="dropdown-item" href="#"></a><a class="dropdown-item" data-aos="zoom-in-down" href="Other.html">| Other</a>
-                            <h6 class="dropdown-header" data-aos="zoom-in-down">-Contact</h6><a class="dropdown-item" data-aos="zoom-in-down" href="https://space.bilibili.com/532918134">Bilibili</a><a class="dropdown-item" data-aos="zoom-in-down" href="https://join.skype.com/u7TyGulYfdCN">Skype</a>
-                        </div>
-                    </li>
-                </ul><a class="btn btn-primary ms-md-2" role="button" href="#">Download</a>
-            </div>
-        </div>
-    </nav>
-    <p>Photo provided by unsplash.com</p>
-    
-    <div align="center" style="height: 100%">
-    <form action="https://www.bing.com/search?q=" method="get" target="_blank">
-			        <input id="bfind" type="text" name="q" style="border-top-left-radius: 15px;border-top-right-radius: 15px;border-bottom-right-radius: 15px;border-bottom-left-radius: 15px;text-align: center;width: 50%;margin: 80px;height: 40px"><button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="background: rgb(0,0,0);border-top-color: rgb(255,255,255);border-right-color: rgb(255,255,255);border-bottom-color: rgb(255,255,255);border-left-color: rgb(255,255,255);font-size: 16px;"></button>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" style="color: blue">Bing</a>
-    </div>
-    </form>
-</div>
-    
-    <h3 id="now" align="center" style="color: white"/>
-    <p id="days" align="center" style="color: white"></p>
-    <script>
+ <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><title>welcome to BINKLINGS</title><meta name="description" content="BINKLINGS official website"><style>
+    .search{
+     backdrop-filter: blur(5px);
+     border-radius: 25px;
+     text-align: center;
+     width: 30%;
+     color: white;
+     margin: 80px;
+     height: 40px;
+     background-color: transparent;
+     z-index: 9999;
+     transition: all 0.25s ease-in-out;
+     border: 2px solid white
+    }
+    .search:focus{
+     background-color: #212529;
+     border-radius: 15px;
+     color: white;
+     width: 50%;
+     transition: all 0.2s ease-in-out;
+     border: 3px solid white;
+    }
+    .nav_buttons{
+     font-size: 100%;
+     background-color: transparent;
+     color: lightgray;
+     border: none;
+     transition: all 0.2s ease-in-out;
+    }
+    .nav_buttons:hover{
+     background-color: transparent;
+     color: white;
+     border: none;
+     transition: all 0.2s ease-in-out;
+    }
+    .nav_buttons2{
+     font-size: 100%;
+     background-color: dodgerblue;
+     color: white;
+     border: 0px solid deepskyblue;
+     border-radius: 3px;
+     padding: 7px;
+     transition: all 0.2s ease-in-out;
+    }
+    .nav_buttons2:hover{
+     border: 4px solid deepskyblue;
+     border-radius: 4px;
+     font-size: 100%;
+     padding: 3px;
+     transition: all 0.2s ease-in-out;
+    }
+    .info-div{
+     width: 90%;
+     padding: 15px;
+     font-size: 20%;
+     border: 2px solid white;
+     border-radius: 10px;
+     background-color: rgba(255, 255, 255, 0.3);
+     backdrop-filter: blur(5px);
+    }
+    .menu{
+     position: fixed;
+     width: auto;
+     height: auto;
+     top: 40%;
+     right: 5%;
+     border: 2px solid white;
+     padding: 5px;
+     border-radius: 5px;
+     color: white;
+     background-color: rgba(0, 0, 0, 0.3);
+     backdrop-filter: blur(5px);
+     font-size: 20px;
+     transition: all 0.2s ease-in-out;
+    }
+    .menu:hover{
+     background-color: black;
+     transition: all 0.2s ease-in-out;
+    }
+    .menu_s{
+     border: 2px solid white;
+     padding: 5px;
+     border-radius: 5px;
+     color: white;
+     background-color: rgba(0, 0, 0, 0.3);
+     backdrop-filter: blur(5px);
+     font-size: 20px;
+     transition: all 0.2s ease-in-out;
+    }
+    .menu_s:hover{
+     background-color: black;
+     transition: all 0.2s ease-in-out;
+    }
+    </style></head><body><nav style="background-color: #212529;padding-top: 2%;padding-bottom: 2%;padding-left: 5%;padding-right: 5%;display: inline-flex;width: 90%;top: 0px;left: 0px;position: absolute" id="main_nav" onclick="playImage()"><span style="color: rgb(255, 241, 165);font-size: 22px;">BINKLINGS</span><div align="right" style="width: 100%;padding-right: 0%"><button class="nav_buttons" onclick="games()">Games</button><button class="nav_buttons" onclick="window.location.assign('./other.html')">Other</button><button class="nav_buttons2" onclick="window.location.assign('./start/index.html')">Start</button></div></nav><div align="center" style="height: 100%;" id="main"><div class="menu" align="center" onclick="menu()">≡</div><div align="center" style="height: 100%;padding-top: 20%;z-index: 9999;"><h2 id="now" align="center" style="color: white;text-shadow: -0.5px 0.5px 0.5px #000, 0.5px 0.5px 0.5px #000;"></h2><form action="https://www.bing.com/search?q=" method="get" target="_blank" style="z-index: 9999;" id="search_form"><input id="find" type="text" name="q" class="search" placeholder="Search"></form></div><script>
+        var establishDate = new Date("2022/10/08");
         var today = new Date();
-        var todayYear = today.getFullYear();
-        var todayMonth = today.getMonth();
-        var todayDate = today.getDate();
-        var t1 = Date.UTC(2016, 7, 8);
-        var t2 = Date.UTC(todayYear, todayMonth, todayDate);
-        var diff = t2 - t1;
-        var diffDays = Math.floor(diff / days);
-	// 设置 <p> 元素的内容
-        var p = document.getElementById("days");
-        p.innerText = "Today is the " + diffDays + " day of establishment of BINKLINGS.com";
-        
+        var diffTime = Math.abs(today - establishDate);
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         var p2 = document.getElementById('now')
         
         updateTime()
         function updateTime(){
             p2.innerText = new Date().getHours() + ':' +  new Date().getMinutes() + ':' + new Date().getSeconds()
-            //alert('hi')
             setTimeout('updateTime()',1000)
         }
-        
-        
-    </script>
-    
-    </br></br></br></br></br>
-    <h1 style="color: white" align="center">Discover something new</h1>
-    
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </br></br></br></br></br>
-    </div>
-    
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-</body>
-
-</html>
-
-
-<script>
-document.body.setAttribute('style','background: #000 url(https://source.unsplash.com/1800x0/?'+GetRequest()+') no-repeat center center;background-size: cover;background-attachment: fixed;')
-
-function GetRequest()
-{
-var url = location.search;
-var theRequest = new Object();
-if (url.indexOf("?") != -1)
-{
-var str = url.substr(1);
-if(str2 = str.split('photo=')[1]){
- return str2;
-}else{
- return 'Scenery'
+    </script><div align="center" style="height: 100%;padding-top: 70%"><h2 style="color: white" align="center">Discover something new</h2><br><div align="center"><div class="info-div"><h2 style="color: white;font-size: 20px" align="center">Weather Now</h2></br><script>
+       (function(d, s, id) {
+           if (d.getElementById(id)) {
+               if (window.__TOMORROW__) {
+                   window.__TOMORROW__.renderWidget();
+               }
+               return;
+           }
+           const fjs = d.getElementsByTagName(s)[0];
+           const js = d.createElement(s);
+           js.id = id;
+           js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+           fjs.parentNode.insertBefore(js, fjs);
+       })(document, 'script', 'tomorrow-sdk');
+       </script><div class="tomorrow" data-location-id="019332" data-language="EN" data-unit-system="METRIC" data-skin="light" data-widget-type="aqiPollen" style="padding-bottom:22px;position:relative;"><a href="https://www.tomorrow.io/weather-api/" rel="nofollow noopener noreferrer" target="_blank" style="position: absolute; bottom: 0; transform: translateX(-50%); left: 50%;"></a></div></div><br><div class="info-div"><h2 style="color: white;font-size: 20px" align="center">Stock</h2><iframe id="customerList" style="border:0px;" src="https://stockstracker.app/userstocks.html?ticks=AAPL,TSLA,BABA,SPY" 
+    width=320 height=200></iframe></div><br><div class="info-div" style="height: 600px"><h2 style="color: white;font-size: 20px" align="center">NotePad</h2><iframe src="./tools.html" frameborder="0" style="width: 100%;height: 100%"></iframe></div><br><div class="info-div" style="height: 600px"><h2 style="color: white;font-size: 20px" align="center">Images</h2><iframe style="border:0px;width: 100%;height: 90%;border-radius: 5px" id="images_div"></iframe></div><br><div class="info-div" style="height: 100px;"><h2 style="color: white;font-size: 20px" align="center">BINKLINGS Start coming soon</h2></div></div></div></div></body></html><style>
+#overlay_searching {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  backdrop-filter: blur(5px)
 }
+#overlay_sleep {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+#overlay_bg {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: black
+}
+.input-1 {
+  border: 2px solid #fff;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  transition: all 0.25s ease-in-out;
+}
+.input-1:focus {
+  border: 2px solid #000;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+  padding: 5px;
+  transition: all 0.25s ease-in-out; */
+}
+.btn-1 {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 0 2px #fff;
+  transition: all 0.25s ease-in-out;
+}
+.btn-1:focus {
+  background: #fff;
+  color: #000;
+  transition: all 0.25s ease-in-out;
+}
+</style><script>
+document.getElementById('find').autocomplete = "off"
+
+light_mode = true
+document.body.addEventListener('contextmenu', function(e) {
+ e.preventDefault();
+ if(light_mode==true){
+ overlay_sleep = document.createElement('div')
+ overlay_sleep.id = 'overlay_sleep'
+ document.body.appendChild(overlay_sleep)
+ opacity_sl = 0;
+ var intervalId = setInterval(function() {
+  opacity_sl += 0.01;
+  overlay_sleep.style.backgroundColor = `rgba(0, 0, 0, ${opacity_sl})`;
+  main_nav.style.top = opacity_sl*-30+'%'
+  if (opacity_sl >= 1) {
+    opacity_sl = 1
+    clearInterval(intervalId);
+  }
+ }, 2);
+ light_mode = false
 }else{
- return 'Scenery'
+ overlay_sleep = document.getElementById('overlay_sleep')
+ opacity_sl = 1;
+ var intervalId = setInterval(function() {
+  opacity_sl -= 0.01;
+  overlay_sleep.style.backgroundColor = `rgba(0, 0, 0, ${opacity_sl})`;
+  main_nav.style.top = opacity_sl*-30+'%'
+  if (opacity_sl <= 0) {
+    opacity_sl = 0
+    document.body.removeChild(overlay_sleep)
+    clearInterval(intervalId);
+  }
+ }, 2);
+ light_mode = true
+}
+});
+
+image_mode = false
+function playImage() {
+ if(image_mode==false){
+  image_mode = true
+  document.getElementById('main').style.opacity = '1'
+  opacity_i = 1;
+  var intervalId = setInterval(function() {
+  opacity_i -= 0.01;
+  document.getElementById('main').style.opacity = opacity_i
+  if (opacity_i <= 0) {
+    opacity_i = 0
+    document.getElementById('main').style.top = '-999999px'
+    document.getElementById('main').style.position = 'fixed'
+    clearInterval(intervalId);
+  }
+ }, 2);
+ }else{
+  image_mode = false
+  document.getElementById('main').style.opacity = '0'
+  opacity_i = 0;
+  document.getElementById('main').style.position = 'static'
+  var intervalId = setInterval(function() {
+  opacity_i += 0.01;
+  document.getElementById('main').style.opacity = opacity_i
+  if (opacity_i >= 1) {
+    opacity_i = 1
+    clearInterval(intervalId);
+  }
+ }, 2);
+ }
+};
+
+
+opacity_s = 0
+main_nav = document.getElementById('main_nav')
+document.getElementById('find').onfocus = function(){
+ overlay_searching = document.createElement('div')
+ overlay_searching.id = 'overlay_searching'
+ document.body.appendChild(overlay_searching)
+ opacity = 0;
+ var intervalId = setInterval(function() {
+  opacity_s += 0.01;
+  overlay_searching.style.backgroundColor = `rgba(0, 0, 0, ${opacity_s})`;
+  main_nav.style.top = opacity_s*-30+'%'
+  if (opacity_s >= 0.5) {
+    opacity_s = 0.5
+    clearInterval(intervalId);
+  }
+}, 2);
+}
+document.getElementById('find').onblur = function() {
+ opacity_s = 0.5;
+ var intervalId = setInterval(function() {
+  opacity_s -= 0.01;
+  overlay_searching.style.backgroundColor = `rgba(0, 0, 0, ${opacity_s})`;
+  main_nav.style.top = opacity_s*-30+'%'
+  if (opacity_s <= 0) {
+   opacity_s = 0
+   document.body.removeChild(overlay_searching)
+   clearInterval(intervalId);
+  }
+ }, 2);
+}
+
+
+const img = new Image();
+img.src = 'https://source.unsplash.com/1800x0/?'+GetRequest();
+overlay_bg = document.createElement('div');
+overlay_bg.id = 'overlay_bg'
+overlay_bg.setAttribute('backdrop-filter','blur(5px)')
+document.body.appendChild(overlay_bg)
+img.onload = function() {
+  document.body.style.backgroundImage = `url(${img.src})`;
+  opacity_bg = 1;
+  var intervalId = setInterval(function() {
+    opacity_bg -= 0.02;
+    overlay_bg.style.opacity = opacity_bg;
+    if (opacity_bg <= 0) {
+      clearInterval(intervalId);
+      document.body.removeChild(overlay_bg);
+    }
+  }, 1);
+};
+document.body.setAttribute('style','background: #000 no-repeat center center;background-size: cover;background-attachment: fixed;')
+
+
+function menu(){
+ showAlert(1,'<h4 style="color:black;height:0px">Settings</h4><br><button class="btn-1" style="padding:5px" onclick="SearchEngine()">Search Engine</button><br><br><button class="btn-1" style="padding:5px" onclick="interest()">Interest</button>')
+ 
+ 
+}
+function interest(){
+ desAlert()
+ setTimeout(function(){
+  showAlert(1,'<h4 style="color:black;height:0px">Interest</h4><h6 style="padding:2px">BINKLINGS displays background images based on demand. Separate each word with a comma</h6><input class="input-1" id="interest_input" placeholder="1-3 English words" value="'+getInterest()+'"/><br><br><button class="btn-1" style="padding:5px" onclick="interest_save(document.getElementById(`interest_input`).value)">Save</button>')
+ },500)
+}
+function SearchEngine(){
+ desAlert()
+ setTimeout(function(){
+  showAlert(1,'<h4 style="color:black;height:0px">Search Engine</h4><br><input class="input-1" id="SearchEngine_input" placeholder="url" value="'+getSearchEngine()+'"/><br><br><button class="btn-1" style="padding:5px" onclick="SearchEngine_save(document.getElementById(`SearchEngine_input`).value)">Save</button><br><br><a onclick="urlExamples()" style="font-size: 14px">Examples</a>')
+ },500)
+}
+function urlExamples(){
+ document.body.setAttribute('style','background: #fff no-repeat center center')
+ document.body.innerHTML = 'Bing: https://www.bing.com/search?q=<br>Google: https://www.google.com/search?q=<br>Brave: https://search.brave.com/search?q=<br>Youtube: https://www.youtube.com/results?search_query=<br>Baidu: https://www.baidu.com/s?wd=<br>Bilibili: https://search.bilibili.com/all?keyword='
+}
+
+if(localStorage.getItem('interest')){
+ 
+}else{
+  interest()
+}
+function getInterest(){
+ if(localStorage.getItem('interest')){
+  return localStorage.getItem('interest')
+ }else{
+  return 'forest,lake'
+ }
+}
+if(localStorage.getItem('engine')){
+ document.getElementById('search_form').setAttribute('action',localStorage.getItem('engine'))
+ document.getElementById('find').setAttribute('name',localStorage.getItem('engine').split('?')[1].split('=')[0])
+}else{
+  localStorage.setItem('engine','https://www.bing.com/search?q=')
+}
+
+function getSearchEngine(){
+ if(localStorage.getItem('engine')){
+  return localStorage.getItem('engine')
+ }else{
+  return 'https://www.bing.com/search?q='
+ }
+}
+function interest_save(words){
+ localStorage.setItem('interest',words)
+ desAlert()
+ window.location.reload()
+}
+function SearchEngine_save(words){
+ localStorage.setItem('engine',words)
+ desAlert()
+ window.location.reload()
+}
+function showAlert(mode,href) {
+fullScreenDiv = document.createElement('div');
+fullScreenDiv.style.position = 'fixed';
+fullScreenDiv.style.top = 0;
+fullScreenDiv.style.left = 0;
+fullScreenDiv.style.width = '100%';
+fullScreenDiv.style.height = '100%';
+fullScreenDiv.style.background = 'rgba(0, 0, 0, 0.5)';
+fullScreenDiv.style.display = 'none';
+var whiteDiv = document.createElement('div');
+whiteDiv.style.width = '300px';
+whiteDiv.style.height = '290px';
+whiteDiv.style.backgroundColor = '#EEE8F4';
+whiteDiv.style.borderRadius = '5px';
+whiteDiv.style.position = 'absolute';
+whiteDiv.style.top = '50%';
+whiteDiv.style.left = '50%';
+whiteDiv.style.transform = 'translate(-50%, -50%)';
+whiteDiv.style.opacity = 0;
+whiteDiv.style.fontSize = '20px'
+whiteDiv.align = 'center'
+fullScreenDiv.appendChild(whiteDiv);
+var iframe = document.createElement('iframe');
+iframe.src = href
+iframe.style.width = '100%';
+iframe.style.height = '100%';
+iframe.style.border = 'none'
+iframe.style.borderRadius = '5px';
+var close = document.createElement('button');
+close.style.position = 'absolute';
+close.style.top = '0px'
+close.style.left = '250px'
+close.style.width = '50px'
+close.style.height = '35px'
+close.style.border = 'none'
+close.style.borderRadius = '5px';
+close.innerHTML = 'X'
+close.onclick = function(){
+ desAlert()
+}
+if(mode==0){
+whiteDiv.appendChild(iframe)
+}else{
+whiteDiv.innerHTML = '</br>'+href
+}
+whiteDiv.appendChild(close)
+setTimeout(function(){
+ document.body.appendChild(fullScreenDiv)
+ fadeIn(whiteDiv, fullScreenDiv, 10);
+ fullScreenDiv.style.display = 'block';
+},10)
+function fadeIn(elem, elem2, speed) {
+let op = 0.01;
+elem.style.opacity = op;
+elem2.style.opacity = op;
+let timer = setInterval(function () {
+if (op >= 1) {
+clearInterval(timer);
+}
+elem.style.opacity = op;
+elem2.style.opacity = op;
+op = op + 0.02;
+}, 1);
+}
+return whiteDiv
+}
+function desAlert(){
+ let op = 1;
+ let timer = setInterval(function () {
+ if (op <= 0) {
+ clearInterval(timer);
+ document.body.removeChild(fullScreenDiv)
+ }
+ fullScreenDiv.style.opacity = op;
+ op = op - 0.02;
+ }, 1);
+ return true
+}
+
+
+function GetRequest(){
+ var url = location.search;
+ var theRequest = new Object();
+ if (url.indexOf("?") != -1){
+  var str = url.substr(1);
+  if(str2 = str.split('photo=')[1]){
+   return str2;
+  }else{
+   if(localStorage.getItem('interest')){
+    return localStorage.getItem('interest')
+   }else{
+    return 'Scenery'
+   }
+  }
+ }else{
+  if(localStorage.getItem('interest')){
+   return localStorage.getItem('interest')
+  }else{
+   return 'Scenery'
+  }
+ }
+}
+document.getElementById('images_div').src = 'https://www.bing.com/images/search?q='+getInterest()
+
+function games(){
+fullScreenDiv = document.createElement('div');
+fullScreenDiv.style.position = 'fixed';
+fullScreenDiv.style.top = 0;
+fullScreenDiv.style.left = 0;
+fullScreenDiv.style.width = '100%';
+fullScreenDiv.style.height = '100%';
+fullScreenDiv.style.background = 'black';
+fullScreenDiv.style.display = 'none';
+
+setTimeout(function(){
+ document.body.appendChild(fullScreenDiv)
+ fadeIn(fullScreenDiv, 10);
+ fullScreenDiv.style.display = 'block';
+},10)
+
+function fadeIn(elem, speed) {
+let op = 0.01;
+elem.style.opacity = op;
+
+let timer = setInterval(function () {
+if (op >= 1) {
+window.location.assign('./games/index.html')
+clearInterval(timer);
+}
+elem.style.opacity = op;
+op = op + 0.01;
+}, 1);
 }
 }
 </script>
