@@ -1,1 +1,161 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+      #files {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        overflow: auto;
+      }
+ 
+      #files li {
+        border: 1px solid #ddd;
+        margin: 5px;
+        padding: 10px;
+        background-color: #fff;
+      }
+ 
+      #files li:hover {
+        background-color: #f5f5f5;
+      }
+ 
+      #editor {
+        width: 97%;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 1%;
+        border: 2px solid white;
+        border-radius: 5px;
+        font-size: 16px
+      }
+      
+      .btn{
+       display: inline-block;
+       padding: 10px 10px;
+       font-size: 16px;
+       color: white;
+       background-color: black;
+       border: 2px solid #fff;
+       border-radius: 5px;
+       transition: all 0.25s ease-in-out;
+      }
+      .btn:focus {
+       background-color: blue;
+       padding: 10px 30px;
+       color: white;
+       transition: all 0.25s ease-in-out;
+      }
+      
+      .btn-2 {
+       display: inline-block;
+       padding: 6px 14px;
+       font-size: 16px;
+       color: red;
+       background-color: white;
+       border: none;
+       border-radius: 5px;
+       box-shadow: 0 0 0 2px #fff;
+       transition: all 0.25s ease-in-out;
+      }
+      .btn-2:focus {
+       background-color: red;
+       color: white;
+       transition: all 0.25s ease-in-out;
+      }
+    </style></head><body><div><ul id="files" style="border: 2px solid white;border-radius: 5px"></ul><br><button id="new-file" class="btn">New file</button><button id="save-file" class="btn">Save</button></div><br><div><textarea id="editor"></textarea></div><script>
+      document.getElementById('editor').style.height = window.screen.height/4 + 'px'
+      document.getElementById('files').style.height = window.screen.height/6 + 'px'
+      // 获取文件列表
+      const filesList = document.getElementById('files');
+      let files = JSON.parse(localStorage.getItem('files')) || [];
+      updateFilesList();
+ 
+      // 获取编辑器
+      const editor = document.getElementById('editor');
+ 
+      // 获取新建文件按钮
+      const newFileButton = document.getElementById('new-file');
+      newFileButton.addEventListener('click', () => {
+        const fileName = prompt('Title：');
+        if (fileName) {
+          createFile(fileName);
+        }
+      });
+ 
+      // 创建一个新文件
+      function createFile(name) {
+        time_split = String(new Date()).split(' ')[4]
+        const file = { name, lastModified: String(new Date()).split(time_split)[0] };
+        files.push(file);
+        localStorage.setItem('files', JSON.stringify(files));
+        updateFilesList();
+        selectFile(name);
+      }
+ 
+      // 删除一个文件
+      function deleteFile(name) {
+        files = files.filter(file => file.name !== name);
+        localStorage.removeItem(name);
+        localStorage.setItem('files', JSON.stringify(files));
+        updateFilesList();
+      }
+ 
+      // 选中一个文件，并在编辑器中显示该文件的内容
+      function selectFile(name) {
+        for (const file of files) {
+          if (file.name === name) {
+            const content = localStorage.getItem(name);
+            editor.value = content || '';
+            break;
+          }
+        }
+      }
+ 
+      // 更新文件列表
+      function updateFilesList() {
+        filesList.innerHTML = '';
+        length = 0
+        for (const file of files) {
+          const listItem = document.createElement('li');
+          listItem.id = 'li'+length
+          listItem.dataset.fileName = file.name;
+          listItem.style.border = 'none'
+          listItem.textContent = `${file.name} - ${file.lastModified}`;
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Delete';
+          deleteButton.className = 'btn-2'
+          deleteButton.addEventListener('click', event => {
+            event.stopPropagation();
+            const fileName = event.target.parentNode.dataset.fileName;
+            deleteFile(fileName);
+          });
+          listItem.appendChild(deleteButton);
+          filesList.appendChild(listItem);
+          length++
+        }
+      }
+      
+      
+      // 获取保存按钮
+      const saveButton = document.getElementById('save-file');
+ 
+      // 当用户选择文件时，更新编辑器中的内容和当前文件名
+      filesList.addEventListener('click', event => {
+        if (event.target.tagName === 'LI') {
+          const selectedFile = event.target.dataset.fileName;
+          for(i=0;i<length;i++){
+           document.getElementById('li'+i).style.backgroundColor = 'white'
+          }
+          event.target.style.backgroundColor = 'dodgerblue'
+          editor.value = localStorage.getItem(selectedFile);
+          currentFile = selectedFile;
+        }
+      });
+ 
+      // 点击保存按钮时，将编辑器中的内容保存到当前文件中
+      saveButton.addEventListener('click', () => {
+        const content = editor.value;
+        localStorage.setItem(currentFile, content);
+        updateFilesList();
+      });
 
+    </script></body></html>
