@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+    body {
+        background-color: #000;
+    }
+
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    
+    h1 {
+     color: white;
+    }
+    
+    h3 {
+     color: white;
+    }
+    
+    #title {
+     text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px black
+    }
+    
+    #output {
+     text-shadow: 0 0 40px black
+    }
+</style>
+</head>
+<body>
+ 
+<div id="js" style="color: black;background-color: white;width: 100%;height: 100%;position: fixed;z-index: 9999;padding: none;left: 0;top: 0">抱歉,您需要启用本页面的Javascript才能够正常使用<br>感谢访问AutoBKLS V2,任何问题请联系作者或加QQ群</div>
+<div style="width: 100%;height: 1600%;z-index: 2;backdrop-filter: blur(5px);position: absolute;top: 0px;left: 0px; color: white;background-color: rgba(255, 255, 255, 0)" align="center" id="mainbg">
+ <div style="height: 1.875%"></div>
+ <h1 id="title">AutoBKLS V2.0</h1>
+ <h3 id="output"></h3>
+ <div style="height: 3.75%"></div>
+ <h2>一分钟感受AutoBKLS V2</h2><br>
+ <iframe src="//player.bilibili.com/player.html" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 75%;border: 3px solid #fff;border-radius: 15px;height: 3.75%"></iframe>
+ <div style="height: 0.75%"></div>
+ <h1>自动收益💰</h1>
+ <h4 style="padding: 5%">AutoBKLS V2可自动控制软件刷视频/开宝箱/广告,采用安卓控件识别和屏幕OCR,外加AI智能纠错,稳定性和效率远高于市场其它脚本程序</h4><br><br>
+ <h1>GPT AI模式🤖</h1>
+ <h4 style="padding: 5%">AutoBKLS V2可嵌套OpenAI的ChatGPT或GPT-4.0,成为安卓端强大的AI助手,它可以在你的手机上运行代码以控制手机,帮助您完成任务</h4>
+ <div style="left: 10%;display:inline-block;background-color: black;width: 20%;height: auto;border: 2px solid #fff;border-radius: 10px"><h5 style="padding: 5px">自我介绍一下,你能展示一个弹窗,或帮我打开QQ吗?</h5><h5 style="color: darkgray;padding: 5px;word-wrap: break-word">执行命令: launch(com.tencent.mobileqq);sleep(5000);alert("这是一个弹窗示例！")</h5><h5 style="padding: 5px">AI :好的，我已为您展示弹窗并打开了QQ。我是一个基于AutoBKLS2程序开发的 AI 机器人，我可以帮助你操控手机完成一些任务。我会在你的手机上执行一些Auto.js代码。请发送你需要执行的任务，并告诉我具体的需求。<h5></div>
+ <div style="left: 40%;display:inline-block;background-color: black;width: 20%;height: auto;border: 2px solid #fff;border-radius: 10px"><h5 style="padding: 5px">可以帮我去网上搜一下 cpu 的百科吗？</h5><h5 style="color: darkgray;padding: 5px;word-wrap: break-word">执行命令: CallMeBack(search("cpu 百科"))</h5><h5 style="padding: 5px;word-wrap: break-word">AI :正在为您搜索cpu的百科，请稍等片刻。<br><br>AI :根据我的搜索结果，你可以在百度百科上查找有关中央处理器的详细信息。这是百度百科的链接：https://baike.baidu.com/item/中央处理器/284033<h5></div>
+ <div style="right: 10%;display:inline-block;background-color: black;width: 20%;height: auto;border: 2px solid #fff;border-radius: 10px"><h5 style="padding: 5px">这几天真热啊,都30多度,帮我打开空调吧!</h5><h5 style="color: darkgray;padding: 5px;word-wrap: break-word">执行命令: runScript('打开空调.js')</h5><h5 style="padding: 5px">AI :是的，据我搜索，最近天气确实很热，需要注意保持身体的水分和防暑降温。我已为您运行打开空调的脚本。你可以多喝水、避免在中午时段长时间暴露在阳光下，选择清爽的衣物等方式来应对高温天气。<h5></div><br><br><br>
+ <h1>可视化脚本编写⚡</h1>
+ <h4 style="padding: 5%">AutoBKLS V2核心模块,允许您可视化/模块化快速编写运行基于AutoX.JS的脚本,无需有AJ基础,内置许多高级功能</h4><div style="width: 100%;height: 5%" id="demo_div"><button style="background-color: black;border: 5px solid white;border-radius: 10px;padding: 3%;font-size: 20px;height: 100%;width: 90%;color: white" align="center" onclick="demo()">&#9654;<br>播放Demo演示</button></div>
+ <br>
+ <h1>✨</h1>
+ <h1>准备齐全 立即下载</h1>
+ <button style="background-color: white;border: none;border-radius: 5px;padding: 1%;font-size: 15px" align="center" onclick="download('github')" id="githubBtn">Github源码</button>
+ <button style="background-color: white;border: none;border-radius: 5px;padding: 1%;font-size: 15px" align="center" onclick="download('lanzou')" id="downloadBtn">蓝奏云(密码:0000)</button>
+ <br><br><br><br>
+ <h1>关于AutoBKLS V2</h1>
+ <h4>软件作者: BINKLINGS</h4>
+ <h4 style="color: skyblue" onclick="window.location.assign('https://www.BINKLINGS.com')">BINKLINGS官网</h4>
+ <h4 style="color: skyblue" onclick="window.location.assign('https://b23.tv/vb7jRiO')">作者B站</h4>
+ <h4>Youtube搜索BINKLINGS</h4>
+ <h4 style="color: orange" onclick="window.location.assign('')">捐赠</h4><br>
+ <h4 style="color: deepskyblue" onclick="window.location.assign('mqq://im/chat?chat_type=group&uin=303550220')">BINKLINGS官方内测群</h4>
+ <h4 style="padding: 5%">加入BINKLINGS官方内测群,抢先体验最新AutoBKLS V2的内测版本,任何问题也可以加群提问,或私信作者<br>群号: 303550220<br>手机端点击蓝色文字即可直接打开加群页面</h4>
+ <div id="end_div"></div>
+ </div>
+
+<h3 style="top: 30%;position: fixed;z-index: 3;width: 100%;left: 0;color: rgba(255, 255, 255, 0)" align="center" id="text2">重新基于AutoX.JS开发<br>永久免费开源无广告</h3>
+
+<div id="newDiv" style="background-color: white;position: fixed;z-index: 4"></div>
+
+<canvas id="particles" style="opacity: 0.7"></canvas>
+
+<script>
+    document.getElementById('js').style.zIndex = -9999
+    document.getElementById('js').style.opacity = 0
+    mainbg = document.getElementById('mainbg')
+    bgcolor = 'rgb(0,53,255)'
+    colors = ['rgb(0,53,255)', 'rgb(140,0,255)', 'rgb(255,125,0)'];
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Particle {
+        constructor(x, y, radius, color, velocity) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = bgcolor;
+            this.velocity = velocity;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        update() {
+            this.draw();
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+            this.radius -= 0.02;
+            this.color = bgcolor
+        }
+    }
+
+    function createParticles() {
+        const particleCount = 100;
+        
+        setInterval(() => {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+
+            const radius = Math.random() * 20 + 1;
+
+            const color = bgcolor
+
+            const velocity = {
+                x: Math.random() * 4 - 2,
+                y: Math.random() * 4 - 2
+            };
+
+            const particle = new Particle(x, y, radius, color, velocity);
+            particles.push(particle);
+
+            if (particles.length > particleCount) {
+                particles.splice(0, 1);
+            }
+        }, 100);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i < particles.length; i++) {
+            if (particles[i].radius > 0) {
+                particles[i].update();
+            } else {
+                particles.splice(i, 1);
+                i--;
+            }
+        }
+    }
+
+    createParticles();
+    animate();
+    
+    
+    function printString(str){
+	    var outputEl = document.getElementById('output');
+	    var index = 0;
+	    var intervalId = setInterval(function() {
+	        outputEl.textContent += str[index];
+		    index++;
+		    if (index === str.length) {
+		    	clearInterval(intervalId);
+		    }
+	    }, 25);
+    }
+    
+    function deleteString(){
+     var outputEl = document.getElementById('output');
+	    var index = String(outputEl.textContent).length;
+	    var index2 = String(outputEl.textContent).length
+	    var intervalId = setInterval(function() {
+	        outputEl.textContent = outputEl.textContent.split(outputEl.textContent[index])[0];
+		    index--;
+		    if (index == index2) {
+		    	clearInterval(intervalId);
+		    }
+	    }, 25);
+    }
+    
+    nowStrI = 0
+    strs = ['解放双手·全新GPT AI模式','一键启动·实现自动收益','快速编写·基于AutoX脚本']
+    
+    printString(strs[nowStrI])
+    nowStrI++
+    setInterval(function(){
+     deleteString()
+     setTimeout(function(){
+      document.getElementById('output').style.color = bgcolor
+      printString(strs[nowStrI])
+      bgcolor = colors[nowStrI]
+      nowStrI++
+      if(nowStrI==3){
+       nowStrI = 0
+      }
+     },1000)
+    },3000)
+    
+    window.addEventListener("scroll",(event) =>{
+     document.getElementById('mainbg').style.backgroundColor = 'rgba(0,0,0,'+this.scrollY/(window.innerHeight/8)+')'
+     if(this.scrollY/(window.innerHeight/8)>=1){
+      window.scrollTo(0,0)
+      alert('请等待AutoBKLS V2公测版发布后再继续浏览以下内容,您可以前往B站在BINKLINGS的动态下预约,敬请期待!')
+      document.getElementById('text2').style.color = 'rgba(255,255,255,'+Number((2*(3-(0.5*(this.scrollY/(window.innerHeight/8)))))-1)+')'
+      if(this.scrollY>document.getElementById('end_div').offsetTop){
+       window.scrollTo(0,document.getElementById('end_div').offsetTop);
+      }
+     }else{
+      document.getElementById('text2').style.color = 'rgba(255,255,255,'+this.scrollY/(window.innerHeight/8)+')'
+     }
+    });
+    
+    
+    function demo(){
+     document.getElementById('demo_div').innerHTML = '<iframe src="./eng.html" style="width: 90%;border: 3px solid #fff;border-radius: 15px;height: 100%"></iframe>'
+    }
+    
+    function download(type){
+     if(type=='github'){
+      document.getElementById('githubBtn').textContent = '正在跳转...'
+      window.location.assign('https://github.com/binklings/AutoBKLS')
+     }else{
+      document.getElementById('downloadBtn').textContent = '正在获取数据...'
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', event => {
+       const fileContent = event.target.responseText;
+       document.getElementById('downloadBtn').textContent = '正在跳转...'
+       alert('下载密码: 0000\n点击确定跳转')
+       window.location.assign(fileContent.split(';')[1])
+      });
+      xhr.open('GET', 'https://www.binklings.com/http/B/version.txt')
+      xhr.send();
+     }
+    }
+</script>
+</body>
+</html>
