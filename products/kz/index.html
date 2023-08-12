@@ -204,8 +204,6 @@
     window.addEventListener("scroll",(event) =>{
      document.getElementById('mainbg').style.backgroundColor = 'rgba(0,0,0,'+this.scrollY/(window.innerHeight/8)+')'
      if(this.scrollY/(window.innerHeight/8)>=1){
-      window.scrollTo(0,0)
-      alert('请等待AutoBKLS V2公测版发布后再继续浏览以下内容,您可以前往B站在BINKLINGS的动态下预约,敬请期待!')
       document.getElementById('text2').style.color = 'rgba(255,255,255,'+Number((2*(3-(0.5*(this.scrollY/(window.innerHeight/8)))))-1)+')'
       if(this.scrollY>document.getElementById('end_div').offsetTop){
        window.scrollTo(0,document.getElementById('end_div').offsetTop);
