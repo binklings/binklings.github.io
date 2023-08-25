@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>搜索引擎</title>
+    <style>
+        .result {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 2px solid white
+        }
+    </style>
+</head>
+<body bgcolor="black">
+    <h5 style="color: white">内测瞎玩,只有不到一万个数据,只是体验下检索和爬虫的程序框架,如果搜英文没反应就刷新一下<br>作者官网 BINKLINGS.com 可在b站或Youtube搜</h5>
+    <input id="input"></input><button onclick="submit(document.getElementById('input').value)">搜索</button>
+    <div id="results"></div>
 
+    <script>
+    function submit(q){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                if(this.responseText=='[]'){
+                 document.getElementById('input').value = '无结果'
+                }else{
+                 show(JSON.parse(this.responseText))
+                }
+            }else{
+                console.error(this.status)
+            }
+        };
+        xhttp.open("GET", 'http://42.193.15.31:3000/search/v1?'+q, true);
+        xhttp.send();
+    }
+
+
+    function show(dataArray){
+        var resultsContainer = document.getElementById("results");
+
+        for (var i = 0; i < dataArray.length; i++) {
+            var div = document.createElement("div");
+            div.className = "result";
+            div.innerHTML = "<h3>" + dataArray[i].title + "</h3><p>" + dataArray[i].introduction + "</p>";
+            div.setAttribute("id", "result_" + i);
+            div.addEventListener("click", function() {
+                var index = this.getAttribute("id").split("_")[1];
+                window.location.href = dataArray[index].url;
+            });
+            resultsContainer.appendChild(div);
+        }
+    }
+    </script>
+</body>
+</html>
