@@ -1,61 +1,112 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>搜索引擎</title>
-    <style>
-        .result {
-            background-color: black;
-            color: white;
-            padding: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            border: 2px solid white
-        }
-    </style>
-</head>
-<body bgcolor="black">
-    <h5 style="color: white">内测瞎玩,只有不到一万个数据,只是体验下检索和爬虫的程序框架,如果搜英文没反应就刷新一下<br>作者官网 BINKLINGS.com 可在b站或Youtube搜</h5>
-    <input id="input"></input><button onclick="submit(document.getElementById('input').value)">搜索</button>
-    <div id="results"></div>
+<!DOCTYPE html> 
+ <html> 
+ <head> 
+     <meta charset="UTF-8"> 
+     <title>搜索引擎</title> 
+     <style> 
+         .result { 
+             background-color: black; 
+             color: white; 
+             padding: 10px; 
+             margin-bottom: 10px; 
+             cursor: pointer; 
+             border: 2px solid white 
+         } 
+     </style> 
+ </head> 
+ <body bgcolor="black"> 
+     <h5 style="color: white">内测瞎玩,只有不到一万个数据,只是体验下检索和爬虫的程序框架,如果搜英文没反应就刷新一下,新版目前采用编辑距离算法,外加关键词高亮,UI根本没做,有空再写!不过别失望,不信看我主域主页!未来UI绝对不会太烂<br>作者官网 BINKLINGS.com 可在b站或Youtube搜</h5> 
+     <input id="input"></input><button onclick="submit(document.getElementById('input').value)">搜索</button> 
+     <div id="results"></div> 
+  
+     <script> 
+     if(String(location).includes("https://")){ 
+         alert("兼容性问题,我们已将连接降级为http而不是https") 
+         window.location.href = "http://www.binklings.com/products/test/s" 
+     } 
+     function submit(q){  
+          var q = q
+          var xhr = new XMLHttpRequest();  
+          xhr.addEventListener('load', event => {  
+              c = event.target.responseText;  
+              console.log(c);  
+              if(c=='[]'){  
+                  document.getElementById('input').value = '无结果'
+              }else{  
+                  show(JSON.parse(c),q)
+              }  
+          })  
+          xhr.open("GET", 'http://42.193.15.31:3000/search/v1?'+q);  
+          xhr.send();  
+      } 
+  
+  
+function show(dataArray, q) {
+    var resultsContainer = document.getElementById("results");
+    resultsContainer.innerHTML = '';
 
-    <script>
-    if(String(location).includes("https://")){
-        alert("兼容性问题,我们已将连接降级为http而不是https")
-        window.location.href = "http://www.binklings.com/products/test/s"
+    // 计算每个结果与搜索问题的相似程度
+    var similarityArray = [];
+    for (var i = 0; i < dataArray.length; i++) {
+        var similarity = calculateSimilarity(dataArray[i].title, q);
+        similarityArray.push({ index: i, similarity: similarity });
     }
-    function submit(q){ 
-         var xhr = new XMLHttpRequest(); 
-         xhr.addEventListener('load', event => { 
-             c = event.target.responseText; 
-             console.log(c); 
-             if(c=='[]'){ 
-                 document.getElementById('input').value = '无结果' 
-             }else{ 
-                 show(JSON.parse(c)) 
-             } 
-         }) 
-         xhr.open("GET", 'http://42.193.15.31:3000/search/v1?'+q); 
-         xhr.send(); 
-     }
 
+    // 根据相似程度降序排序
+    similarityArray.sort(function(a, b) {
+        return b.similarity - a.similarity;
+    });
 
-    function show(dataArray){
-        var resultsContainer = document.getElementById("results");
-        resultsContainer.innerHTML = ''
+    // 根据排序结果渲染结果容器
+    for (var j = 0; j < similarityArray.length; j++) {
+        var resultIndex = similarityArray[j].index;
+        var div = document.createElement("div");
+        div.className = "result";
+        div.innerHTML = "<h3>" + highlightText(dataArray[resultIndex].title, q) + "</h3><p>" + dataArray[resultIndex].introduction + "</p>";
+        div.setAttribute("id", "result_" + resultIndex);
+        div.addEventListener("click", function() {
+            var index = this.getAttribute("id").split("_")[1];
+            window.location.href = dataArray[index].url;
+        });
+        resultsContainer.appendChild(div);
+    }
+}
 
-        for (var i = 0; i < dataArray.length; i++) {
-            var div = document.createElement("div");
-            div.className = "result";
-            div.innerHTML = "<h3>" + dataArray[i].title + "</h3><p>" + dataArray[i].introduction + "</p>";
-            div.setAttribute("id", "result_" + i);
-            div.addEventListener("click", function() {
-                var index = this.getAttribute("id").split("_")[1];
-                window.location.href = dataArray[index].url;
-            });
-            resultsContainer.appendChild(div);
+// 计算字符串相似程度的函数示例（编辑距离算法）
+function calculateSimilarity(str1, str2) {
+    var m = str1.length;
+    var n = str2.length;
+    var dp = [];
+
+    // 初始化二维数组
+    for (var i = 0; i <= m; i++) {
+        dp[i] = [];
+        dp[i][0] = i;
+    }
+    for (var j = 0; j <= n; j++) {
+        dp[0][j] = j;
+    }
+
+    // 动态规划计算编辑距离
+    for (var i = 1; i <= m; i++) {
+        for (var j = 1; j <= n; j++) {
+            if (str1.charAt(i - 1) === str2.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1];
+            } else {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1;
+            }
         }
     }
-    </script>
-</body>
-</html>
+
+    // 返回字符串相似程度（这里使用的是归一化的编辑距离）
+    return 1 - dp[m][n] / Math.max(m, n);
+}
+
+// 高亮显示搜索关键词的函数示例
+function highlightText(text, keyword) {
+    var regex = new RegExp('[' + keyword + ']', 'gi');
+    return text.replace(regex, '<span style="color: lightblue;text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px black">$&</span>');
+}
+     </script> 
+ </body> 
+ </html>
