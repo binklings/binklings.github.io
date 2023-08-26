@@ -21,16 +21,16 @@
 
     <script>
     function submit(q){
-        var xhttp = new XMLHttpRequest();
-            xhr.addEventListener('load', event => {
-                c = event.target.responseText;
-                console.log(c);
-                if(c=='[]'){
-                 document.getElementById('input').value = '无结果'
-                }else{
-                 show(JSON.parse(c))
-                }
-            })
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', event => {
+            c = event.target.responseText;
+            console.log(c);
+            if(c=='[]'){
+                document.getElementById('input').value = '无结果'
+            }else{
+                show(JSON.parse(c))
+            }
+        })
         xhttp.open("GET", 'http://42.193.15.31:3000/search/v1?'+q);
         xhttp.send();
     }
