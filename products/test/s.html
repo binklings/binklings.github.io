@@ -22,18 +22,15 @@
     <script>
     function submit(q){
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                if(this.responseText=='[]'){
+            xhr.addEventListener('load', event => {
+                c = event.target.responseText;
+                console.log(c);
+                if(c=='[]'){
                  document.getElementById('input').value = '无结果'
                 }else{
-                 show(JSON.parse(this.responseText))
+                 show(JSON.parse(c))
                 }
-            }else{
-                console.error(this.status)
-            }
-        };
+            })
         xhttp.open("GET", 'http://42.193.15.31:3000/search/v1?'+q, true);
         xhttp.send();
     }
