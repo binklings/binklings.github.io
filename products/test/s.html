@@ -38,6 +38,7 @@
 
     function show(dataArray){
         var resultsContainer = document.getElementById("results");
+        resultsContainer.innerHTML = ''
 
         for (var i = 0; i < dataArray.length; i++) {
             var div = document.createElement("div");
