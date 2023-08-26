@@ -20,7 +20,10 @@
     <div id="results"></div>
 
     <script>
-    window.location.href = "http://www.binklings.com/products/test/s"
+    if(String(location).includes("https://")){
+        alert("兼容性问题,我们已将连接降级为http而不是https")
+        window.location.href = "http://www.binklings.com/products/test/s"
+    }
     function submit(q){ 
          var xhr = new XMLHttpRequest(); 
          xhr.addEventListener('load', event => { 
