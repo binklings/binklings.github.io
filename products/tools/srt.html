@@ -39,7 +39,7 @@ function formatTime(seconds) {
     ":" +
     minutes.toString().padStart(2, "0") +
     ":" +
-    seconds.toString().padStart(2, "0") +
+    Math.floor(seconds).toString().padStart(2, "0") +
     "," +
     milliseconds.toString().padStart(3, "0")
   );
