@@ -25,8 +25,10 @@ var download = document.getElementById("download");
 
 // 定义一些常量
 var SEPARATORS = ["，", "。", "；", '\n', '：', '.', ',', ';', ':']; // 分隔符
-var SPEED = 5; // 每秒钟读多少个字
+var SPEED = 6.35; // 每秒钟读多少个字
 var EXTENSION = ".srt"; // 文件扩展名
+
+alert("默认阅读速度为6.35/s，若需更改，请在浏览器控制台执行指令 SPEED = xxx");
 
 // 定义一个函数，将秒数转换为 hh:mm:ss,mmm 格式
 function formatTime(seconds) {
