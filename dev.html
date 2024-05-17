@@ -1,0 +1,16 @@
+<meta charset="UTF-8">
+<body bgcolor="black">
+</body>
+<script>
+const config = {
+  'oauth_uri': 'https://github.com/login/oauth/authorize',
+  'redirect_uri': 'https://s.binklings.com/login',
+  'client_id': 'Ov23li34Fpj2PuPFYs4Q',
+};
+function login(){
+ window.localStorage.preventHref = window.location.href
+ window.location.href = `${config.oauth_uri}?client_id=${config.client_id}&redirect_uri=${config.redirect_uri}`
+}
+
+login()
+</script>
