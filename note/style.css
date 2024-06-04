@@ -1,0 +1,354 @@
+img {
+ border-radius: 1rem;
+ width: 95%;
+ margin-left: 1.5%;
+}
+
+
+.list-item {
+  color: white;
+  font-size: 1.1em;
+  width: 90%;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
+  background-color: transparent;
+  border-radius: 100px;
+  overflow: hidden;
+  border: none;
+  position: relative;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.list-item [data-custom-tag="select"] {
+ color: red;
+}
+
+.list-item:hover {
+  background-color: rgba(42, 60, 95, 0.6);
+  transition: 0.3s;
+}
+
+.list-item:hover::before {
+  background-color: rgba(33, 60, 130, 0.9);
+  border-radius: 100px
+}
+
+.list-item::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  transform: scale(0, 1);
+  border-radius: 100px;
+  transition: 0.6s;
+  z-index: -1;
+}
+
+.list-item:focus::before {
+  transform: scale(1, 1);
+}
+
+.list-item:focus {
+  color: #fcf3d1;
+  transition: 0.3s;
+}
+
+.list-item span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.list-item span:after {
+  content: '\00BB';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -0.8rem;
+  transition: 0.5s;
+}
+
+.list-item:hover span {
+  padding-right: 1.2rem;
+}
+
+.list-item:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+
+
+.sidebar {
+  height: 100%;
+  width: 260px;
+  position: fixed;
+  top: 0;
+  left: 0px;
+  background-color: rgba(220, 220, 255, 0.1);
+  backdrop-filter: blur(4px);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 3;
+}
+.sidebar::-webkit-scrollbar {
+  /*chrome*/
+  display: none;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.content {
+  transition: margin-left 0.5s;
+  padding: 16px;
+  color: white;
+}
+.content2 {
+  transition: margin-left 0.5s;
+  padding: 6px;
+  color: white;
+}
+
+
+
+.menu {
+  margin: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  position: fixed;
+  background-color: transparent;
+  border: none;
+  z-index: 4;
+}
+
+.menu:before,
+.menu:after {
+  content: "";
+  display: block;
+  width: 1.5em;
+  height: 0.24em;
+  background: #fff;
+  border-radius: 0.12em;
+  position: absolute;
+  left: 0;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.45s ease-in-out;
+  background-color: rgba(200, 200, 200, 0.9);
+}
+
+.menu:before {
+  top: 0.075em;
+  box-shadow: 0 0.555em rgba(200, 200, 200, 0.9);
+}
+
+.menu:after {
+  bottom: 0.075em;
+}
+
+.menu.active:before {
+  top: 0.63em;
+  box-shadow: none;
+  -webkit-transform: rotate(225deg);
+  transform: rotate(225deg);
+  background-color: lightskyblue;
+}
+
+.menu.active:after {
+  bottom: 0.63em;
+  -webkit-transform: rotate(135deg);
+  transform: rotate(135deg);
+  background-color: lightskyblue;
+}
+
+
+
+.progress1 {
+ right: 0px;
+ width: 0.2em;
+ height: 100%;
+ position: absolute;
+ opacity: 0;
+ background: linear-gradient(rgba(100, 100, 100, 0.1), skyblue);
+ transition: all 0.4s ease-in-out;
+}
+.progress1.active {
+ opacity: 0.8;
+ transition: all 0.7s ease-in-out;
+}
+
+
+
+.cover {
+ background: linear-gradient(transparent, #0f1418, #0f1418,#0f1418);
+ width: 100%;
+ height: 200%;
+ top: -100%;
+ left: 0px;
+ z-index: 3;
+ position: fixed;
+}
+
+.cover2 {
+ background-color: black;
+ width: 100%;
+ height: 100%;
+ top: 0px;
+ left: 0px;
+ z-index: 3;
+ opacity: 0.5;
+ position: fixed;
+}
+
+
+.pgs {
+  width: 30%;
+  height: 5px;
+  left: 35%;
+  top: 44%;
+  border-radius: 100px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0px 0px 1rem 0.2rem black;
+  position: relative;
+  z-index: 5;
+}
+.pgsd {
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  background: white;
+  width: 100%;
+  height: 5px;
+  border-radius: 100px;
+  animation-name: pgs_ani;
+  position: absolute;
+}
+  
+@keyframes pgs_ani {
+  0% {
+    left: -105%;
+  }
+  100% {
+    left: 105%;
+  }
+}
+
+
+
+.articleBtn {
+  color: white;
+  user-select: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 0em;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-shadow: 0px 0px 2px white, 0px 0px 5px black;
+  transition: all 0.4s ease-in-out;
+}
+.articleBtn:hover {
+  box-shadow: 0px 0px 0.98rem 0.18rem rgba(0, 0, 0, 0.75);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  transition: all 0.26s ease-in-out;
+}
+.articleBtn .set {
+  color: #fcf3d1;
+  display: inline-block;
+  width: 5em;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 100%;
+  position: absolute;
+  right: -5em;
+  transition: all 0.4s ease-in-out;
+}
+.articleBtn:hover .set {
+  right: 0em;
+  transition: all 0.26s ease-in-out;
+}
+
+
+
+#editor {
+    width: 100%;
+    height: 100vh;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    background-color: #0f1418;
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    outline: medium;
+    padding-inline: 0.525rem;
+    padding-left: 0.077rem;
+    padding-right: 1rem;
+    caret-color: lightblue;
+}
+
+#editor h1, #editor h2, #editor h3, #editor h4, #editor h5, #editor h6, #editor img {
+  display: inline-block;
+}
+
+
+.codeEditor {
+  z-index: 1;
+}
+
+
+
+#tools {
+  width: 100%;
+  height: 2.42rem;
+  left: 0px;
+  bottom: 0px;
+  position: fixed;
+  background-color: rgba(31, 50, 90, 0.6);
+  backdrop-filter: blur(2.14px);
+  box-shadow: 0px 0.03rem black;
+}
+
+
+.ttBtn {
+  width: 3em;
+  top: 0px;
+  height: 2.8em;
+  background-color: transparent;
+  position: fixed;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+.ttBtn:active {
+  background-color: rgba(53, 90, 160, 0.7);
+  transition: all 0.1s ease-in-out;
+}
+
+.toolBtn {
+  width: 9vw;
+  height: 100%;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  transition: all 0.3s ease-in-out;
+}
+.toolBtn:active {
+  background-color: rgba(53, 90, 160, 0.7);
+  transition: all 0.1s ease-in-out;
+}

@@ -1,0 +1,745 @@
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="main.js"></script>
+  <script src="FloadMet.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/meta.js"></script>
+</head>
+
+<body bgcolor="#0f1418">
+<div class="cover"></div>
+<div class="pgs" id="loadingHint"><div class="pgsd"></div></div>
+<div class="cover2" onclick="closeNav()" ></div>
+<button onclick="openNav()" class="menu"></button>
+<div class="content" id="main">
+  <div style="top: 0px; left: 0px; width: 100%; height: 5rem; position: fixed; background: linear-gradient(rgb(15, 20, 24), transparent)"></div>
+  <div style="bottom: 0px; left: 0px; width: 100%; height: 2em; position: fixed; background: linear-gradient(transparent, rgb(15, 20, 24))"></div>
+  
+  <div onclick="closeNav()" class="content2" id="title" style="margin-top: 1.25em; margin-left: 260px;">
+    <h2 id="titleText"></h2>
+  </div>
+  
+  <div id="content">
+   <button class="ttBtn" style="right: 12em; border-bottom-left-radius: 1em;" id="t_undo">&#8617;</button>
+   <button class="ttBtn" style="right: 9em;" id="t_redo">&#8618;</button>
+   <button class="ttBtn" style="right: 6em;" id="t_save">&#128190;</button>
+   <button class="ttBtn" style="right: 3em; color: greenyellow" id="t_play">&#9654;</button>
+   <button class="ttBtn" style="right: 0px;" id="t_more">&hellip;</button>
+   <div id="editor" contenteditable="true"></div>
+   <div style="height: 2.5rem"></div>
+   <div id="tools" align="center">
+     <button class="toolBtn" id="t_heading">H</button>
+     <button class="toolBtn" id="t_bold"><b>B</b></button>
+     <button class="toolBtn" id="t_italic"><i>I</i></button>
+     <button class="toolBtn" id="t_underline"><u>U</u></button>
+     <button class="toolBtn" id="t_link">&#128279;</button>
+     <button class="toolBtn" id="t_img">&#128444;</button>
+     <button class="toolBtn" id="t_code"><></button>
+     <button class="toolBtn" id="t_strikethrough"><del>S</del></button>
+     <button class="toolBtn" id="t_highlight"><mark style="border-radius: 0.5em">L</mark></button>
+   </div>
+  </div>
+
+</div>
+
+  <div class="sidebar" id="sidebar" align="center">
+   <div class="progress1"></div>
+   <div style="width: 90%; background-color: transparent; padding: 10px;">
+    
+    <button type="link" class="list-item" onclick="loadNewPage(null, 'Home')">
+     <span style="font-weight: bold">Home</span>
+    </button>
+    <br><br>
+    <button type="link" class="list-item">
+     <span style="font-weight: bold">Edit</span>
+    </button>
+    
+   </div>
+  </div>
+</body>
+</html>
+<script>
+CodeMirror.modeInfo.forEach(function(mode) {
+  var script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/' + mode.mode + '/' + mode.mode + '.min.js';
+  document.head.appendChild(script);
+});
+
+
+
+var editor = document.getElementById('editor');
+let previousContent = editor.innerText;
+
+function parsing(){
+  const currentContent = editor.innerText;
+  const previousNewLines = (previousContent.match(/\n/g) || []).length;
+  const currentNewLines = (currentContent.match(/\n/g) || []).length;
+  
+  lastText = editor.innerText;
+  cursorPos = getCaretPosition(editor);
+  editor.innerHTML = markdownToHtmlWithOriginal(editor.innerText);
+  codeEditors = document.getElementsByClassName('codeEditor');
+  for(i=0;i<codeEditors.length;i++){
+    CodeMirror.fromTextArea(codeEditors[i], {
+      mode: 'text/'+codeEditors[i].getAttribute('data-language'),
+      theme: 'monokai',
+      lineNumbers: false,
+      indentUnit: 2,
+      smartIndent: true,
+      matchBrackets: true,
+      autoCloseBrackets: true,
+      styleActiveLine: true,
+      extraKeys: {
+        'Ctrl-Space': 'autocomplete'
+      }
+    });
+  }
+    
+  setCaretPosition(editor, cursorPos);
+  
+  if (currentNewLines > previousNewLines) {
+    //new line
+    moveCursorToNextLine();
+  } else if (currentNewLines < previousNewLines) {
+    //line removed
+  }
+  previousContent = currentContent;
+}
+
+
+let undoStack = [];
+let redoStack = [];
+
+editor.addEventListener('input', (event) => {
+  undoStack.push({ value: editor.innerText, caret: getCaretPosition(editor) });
+  redoStack = [];
+  parsing();
+})
+
+function undo() {
+  if (undoStack.length > 0) {
+    const currentState = undoStack.pop();
+    redoStack.push(currentState);
+    if (undoStack.length > 0) {
+      const previousState = undoStack[undoStack.length - 1];
+      editor.innerText = previousState.value;
+      setCaretPosition(editor, previousState.caret);
+    } else {
+      editor.innerText = '';
+      setCaretPosition(editor, 0);
+    }
+  }
+}
+
+function redo() {
+  if (redoStack.length > 0) {
+    const nextState = redoStack.pop();
+    undoStack.push(nextState);
+    editor.innerText = nextState.value;
+    setCaretPosition(editor, nextState.caret);
+  }
+}
+
+
+navOpened = true;
+finishedA = true;
+toggleMenu();
+
+function openNav() {
+  if (navOpened) {
+    toggleMenu();
+    navOpened = false;
+    document.getElementById("sidebar").style.left = "-260px";
+    document.getElementById("title").style.marginLeft= "0";
+    uncover2();
+  } else {
+    toggleMenu();
+    navOpened = true;
+    document.getElementById("sidebar").style.left = "0px";
+    document.getElementById("title").style.marginLeft= "250px";
+    cover2();
+  }
+}
+function closeNav() {
+ if(navOpened==true){
+  toggleMenu();
+  navOpened = false;
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("title").style.marginLeft= "0";
+  uncover2();
+ }
+}
+
+
+
+function replaceAll(str, target, replacement) {
+ var regex = new RegExp(target, 'g');
+ return str.replace(regex, replacement);
+}
+
+paramsStr = window.location.search
+params = new URLSearchParams(paramsStr)
+htmlUrl = 'https://ai.binklings.com/a/' + params.get('type') + '/' + params.get('page') + '.html';
+
+
+
+function checkActiveElementRequests() {
+  var elementsWithImg = document.querySelectorAll('img');
+  var activeRequests = [];
+  elementsWithImg.forEach(function(element) {
+    if(element.complete !== undefined) {
+      if (!element.complete) {
+        activeRequests.push(element);
+      }
+    } else {
+      if (element.readyState !== 'complete') {
+        activeRequests.push(element);
+      }
+    }
+  });
+  return activeRequests;
+}
+
+var finishedL = false;
+function loadPage(pageTitle, pageType){
+ elements = document.querySelectorAll('.list-item');
+ elements.forEach(element => {
+  if (element.innerText === pageType) {
+   element.style.backgroundColor = 'rgba(33, 60, 130, 0.9)';
+  }
+ });
+ 
+ finishedL = false;
+ slitv = setInterval(()=>{
+  if(finishedA){
+   finishedA = false;
+   
+   document.getElementById('titleText').innerText = pageTitle;
+   if(pageType=='Home'){
+     var div = document.createElement('div');
+     div.style.width = '100vw';
+     div.style.height = '100vh';
+     div.style.position = 'fixed';
+     div.style.left = '0px';
+     div.style.top = '0px';
+     div.style.zIndex = '1';
+     div.setAttribute('id', 'homeDiv');
+     div.setAttribute('align', 'center');
+
+     var img = document.createElement('img');
+     img.src = 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2670&auto=format&fit=crop';
+     img.style.width = '100vw';
+     img.style.height = '100vh';
+     img.style.objectFit = 'cover';
+     img.style.objectPosition = 'center center';
+     img.style.position = 'fixed';
+     img.style.left = '0px';
+
+     var innerDiv = document.createElement('div');
+     innerDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.16)';
+     innerDiv.style.overflow = 'auto';
+     innerDiv.style.width = '80%';
+     innerDiv.style.height = '80%';
+     innerDiv.style.left = '10%';
+     innerDiv.style.top = '10%';
+     innerDiv.style.position = 'fixed';
+     innerDiv.style.borderRadius = '1rem';
+     innerDiv.style.overflowX = "hidden";
+     innerDiv.setAttribute('id', 'noteList');
+     innerDiv.innerHTML = `<div class="articleBtn"><h3 onclick="newNote('')" style="display: inline-block; padding: 0.3em; width: 100%; color: #fcf3d1">+ New File</h3></div><div style="width: 95%; height: 1px; background-color: gray"></div><!--==::BINKLINGS?-?Note?-?System?-?Loaded;;==-->`;
+
+     div.appendChild(img);
+
+     div.appendChild(innerDiv);
+
+     editor.innerHTML = "";
+     document.getElementById('content').appendChild(div);
+     listFiles();
+   }else{
+     if(document.getElementById('homeDiv')){
+       document.getElementById('homeDiv').parentElement.removeChild(document.getElementById('homeDiv'));
+     }
+     //document.getElementById('content').innerHTML = '<div id="editor" contenteditable="true"></div>';
+     //editor = document.getElementById('editor');
+     readFile(pageTitle, 'show');
+   }
+   
+   slitv2 = setInterval(()=>{
+    if(finishedL){
+     finishedL = false;
+     
+     
+     paramsStr = window.location.search
+     params = new URLSearchParams(paramsStr)
+     elements = document.querySelectorAll('.list-item');
+     elements.forEach(element => {
+      if (element.innerText === params.get('type')) {
+       element.style.backgroundColor = 'rgba(33, 60, 130, 0.9)';
+      } else {
+       element.style.backgroundColor = 'transparent';
+       element.style.cssText = '';
+       element.offsetHeight;
+       element.classList.add('list-item');
+       element.offsetHeight;
+      }
+     });
+     
+     uncover();
+     clearInterval(slitv2);
+    }
+   }, 20)
+   slitv3 = setInterval(()=>{
+    activeElementRequests = checkActiveElementRequests();
+    if (activeElementRequests.length > 0) {
+    }else{
+      if(document.getElementById('content').innerHTML.includes('==::BINKLINGS?-?Note?-?System?-?Loaded;;==')){
+        finishedL = true;
+        clearInterval(slitv3);
+      }
+    }
+   })
+   clearInterval(slitv);
+  }
+ }, 20)
+}
+
+function updateURLParams(type, page) {
+  urlParams = new URLSearchParams(window.location.search);
+  urlParams.set('type', type);
+  urlParams.set('page', page);
+  newUrl = new URL(window.location);
+  newUrl.search = urlParams.toString();
+  history.pushState({}, '', newUrl);
+}
+
+function isNewPage(pageTitle, pageType){
+  paramsStr = window.location.search;
+  params = new URLSearchParams(paramsStr);
+  if(pageTitle==null || params.get('page')=='null'){
+    if(pageTitle==null && params.get('page')=='null'){
+      return params.get('type')!==pageType;
+    }else{
+      return true;
+    }
+  }else{
+    if(params.get('type')==pageType){
+      return params.get('page')!==pageTitle;
+    }else{
+      return true;
+    }
+  }
+}
+
+function loadNewPage(pageTitle, pageType, isSaved){
+  if(!navOpened){
+    toggleMenu();
+    navOpened = true;
+    document.getElementById("sidebar").style.left = "0px";
+    document.getElementById("title").style.marginLeft= "250px";
+  }
+  paramsStr = window.location.search;
+  params = new URLSearchParams(paramsStr);
+  if(isNewPage(pageTitle, pageType)){
+    if(params.get('type')!=='Edit'){
+      updateURLParams(pageType, pageTitle);
+      cover3();
+      var listItems = document.getElementsByClassName('list-item');
+      loadPage(pageTitle, pageType);
+    }else{
+      if(isSaved){
+        updateURLParams(pageType, pageTitle);
+        cover3();
+        var listItems = document.getElementsByClassName('list-item');
+        loadPage(pageTitle, pageType);
+      }else{
+        readFile(params.get('page'), 'checkSave?'+pageTitle+'?'+pageType);
+      }
+    }
+  }
+}
+
+
+
+function toggleMenu() {
+  var menuButton = document.querySelector('.menu');
+  var progress1 = document.querySelector('.progress1');
+  if (menuButton.classList.contains('active')) {
+    menuButton.classList.remove('active');
+    progress1.classList.remove('active');
+  } else {
+    menuButton.classList.add('active');
+    progress1.classList.add('active');
+  }
+}
+
+
+
+function cover3(){
+ var ti = 100;
+ var itv = setInterval(()=>{
+  ti -= 1
+  document.getElementsByClassName('cover')[0].style.top = ti + '%';
+  document.getElementById('loadingHint').style.opacity = (100-ti)/100;
+  if(ti<=-100){
+   finishedA = true;
+   clearInterval(itv);
+  }
+ }, 2)
+}
+
+function uncover(){
+ var ti = -100;
+ var itv = setInterval(()=>{
+  ti += 1
+  document.getElementsByClassName('cover')[0].style.top = ti + '%';
+  document.getElementById('loadingHint').style.opacity = (100-ti)/100;
+  if(ti>=100){
+   closeNav();
+   clearInterval(itv);
+  }
+ }, 6)
+}
+
+function cover2(){
+ var h4Elements = document.querySelectorAll('.mainTitle');
+ h4Elements.forEach(function(h4) {
+  h4.style.wordBreak = 'break-all';
+ });
+ 
+ document.getElementsByClassName('cover2')[0].style.top = '0';
+ var ti = 0;
+ var itv = setInterval(()=>{
+  ti += 0.01
+  document.getElementsByClassName('cover2')[0].style.opacity = ti;
+  if(ti>=0.5){
+   clearInterval(itv);
+  }
+ }, 10)
+}
+function uncover2(){
+ var ti = 0.5;
+ var itv = setInterval(()=>{
+  ti -= 0.01
+  document.getElementsByClassName('cover2')[0].style.opacity = ti;
+  if(ti<=0){
+   var h4Elements = document.querySelectorAll('.mainTitle');
+   h4Elements.forEach(function(h4) {
+    h4.style.wordBreak = 'break-word';
+   });
+   
+   document.getElementsByClassName('cover2')[0].style.top = '-200%';
+   clearInterval(itv);
+  }
+ }, 8)
+}
+</script>
+
+<script>
+setTimeout(()=>{
+  if(params.get('page')!==null && params.get('type')!==null){
+    loadPage(params.get('page'), params.get('type'));
+  }else{
+    loadPage(null, 'Home');
+    updateURLParams('Home', 'null');
+  }
+}, 200)
+</script>
+
+<script>
+var t_heading = document.getElementById("t_heading");
+var t_bold = document.getElementById("t_bold");
+var t_italic = document.getElementById("t_italic");
+var t_underline = document.getElementById("t_underline");
+var t_link = document.getElementById("t_link");
+var t_img = document.getElementById("t_img");
+var t_code = document.getElementById("t_code");
+var t_strikethrough = document.getElementById("t_strikethrough");
+var t_highlight = document.getElementById("t_highlight");
+
+var t_undo = document.getElementById("t_undo");
+var t_redo = document.getElementById("t_redo");
+var t_save = document.getElementById("t_save");
+var t_play = document.getElementById("t_play");
+
+
+t_heading.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("# ");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      
+      parsing();
+    }
+  }
+}
+
+t_bold.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("**");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("**");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_italic.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("*");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("*");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_underline.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("__");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("__");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_link.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("[](");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode(")");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_img.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("![](");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode(")");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_code.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("```javascript\n\n");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("```");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_strikethrough.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("~~");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("~~");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+t_highlight.onmousedown = function(event) {
+  event.preventDefault();
+  
+  if (window.getSelection) {
+    var sel = window.getSelection();
+    if (sel.getRangeAt && sel.rangeCount && editor === document.activeElement) {
+      var range = sel.getRangeAt(0);
+      var node = document.createTextNode("==");
+      range.insertNode(node);
+      range.setStartAfter(node);
+      range.setEndAfter(node);
+      var node2 = document.createTextNode("==");
+      range.insertNode(node2);
+      
+      parsing();
+    }
+  }
+}
+
+
+t_undo.onmousedown = function(event) {
+  event.preventDefault();
+  undo();
+  parsing();
+}
+
+t_redo.onmousedown = function(event) {
+  event.preventDefault();
+  redo();
+  parsing();
+}
+
+t_save.onmousedown = function(event) {
+  event.preventDefault();
+  toast1("Saved");
+  paramsStr = window.location.search;
+  params = new URLSearchParams(paramsStr);
+  updateFile(params.get('page'), editor.innerText);
+}
+
+t_play.onmousedown = function(event) {
+  event.preventDefault();
+  paramsStr = window.location.search;
+  params = new URLSearchParams(paramsStr);
+  window.open('./play.html?name='+params.get('page'));
+}
+</script>
+
+<script>
+window.onbeforeunload=function(e){
+  var e = window.event||e;
+  paramsStr = window.location.search;
+  params = new URLSearchParams(paramsStr);
+  if(params.get('type')=='Edit'){
+    e.returnValue=('Are you sure to close the page?');
+  }
+}
+</script>
+
+<script>
+if (!localStorage.getItem('visited')) {
+  localStorage.setItem('visited', "t");
+  setTimeout(()=>{
+    createFile("Introduction", `
+# Welcome to BINKLINGS Note
+
+BINKLINGS Note is a convenient Markdown note-taking software that is completely free and open source.This note will show you how to use BINKLINGS Note. 
+
+## Pages
+
+In most pages, you can click the ≡ button in the upper left corner to open the page menu.
+
+You can open the Home page and browse through all your local notes. We will add more tool pages in the future. 
+
+## Files Management
+
+On the home page: Click + New File to create a new note; hover over a file and click the ≡ button that slides in on the right to rename or delete the file. 
+
+## Editing
+
+Once you click on a file, you will enter the editor interface.
+
+The five buttons hovering in the upper right corner of the editor are: Undo, Redo, Play (previewing your Markdown in a new tab and doesn't show extras), Save, and More.
+The blue menu at the bottom of the screen contains some of Markdown's shortcut editing keys. 
+
+# Markdown
+
+Here are some markdown examples:
+
+This is a **Bold** word.
+This is a *Italic* word.
+This is a __Underlined__ word.
+This is a [link](https://www.binklings.com/note).
+
+Below is a picture of: 
+![Mountain](https://images.unsplash.com/photo-1716980197262-ce400709bf0d)
+
+And here are some Javascript codes:
+\`\`\`javascript
+console.log("Hello, World!");
+\`\`\`
+
+~~Strikthrough Text~~
+==Highlight Text==
+
+The custom HTML code will be displayed in Play mode
+<button style="background-color: black; color: white; border: none; border-radius: 10px; font-size: 2em; padding: 2em">Hello</button>
+
+# About
+
+Made by [BINKLINGS](https://www.BINKLINGS.com)
+
+[Github](https://github.com/binklings/binklings.github.io/tree/main/Note)
+[X(Twitter)](https://x.com/BINKLINGS_COM)
+[Youtube](https://www.youtube.com/channel/UCu_9z6ukU7Ks22LqItxxD0w)
+[Bilibili](https://space.bilibili.com/532918134)
+
+***Let's build something Incredible✨***
+    `);
+    
+    setTimeout(()=>{
+      listFiles();
+    }, 500)
+  }, 500);
+}
+</script>

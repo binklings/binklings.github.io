@@ -1,0 +1,110 @@
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/meta.js"></script>
+<body bgcolor="#0f1418">
+  <div style="top: 0px; left: 0px; width: 100%; height: 5rem; position: fixed; background: linear-gradient(rgb(15, 20, 24), transparent); z-index: 5"></div>
+  <div style="bottom: 0px; left: 0px; width: 100%; height: 2em; position: fixed; background: linear-gradient(transparent, rgb(15, 20, 24)); z-index: 5"></div>
+  <div style="padding: 1rem; width: 95%; position: fixed" id="editor"></div>
+</body>
+<script>
+paramsStr = window.location.search;
+params = new URLSearchParams(paramsStr);
+
+let db;
+let request = indexedDB.open("fileSystem", 1);
+request.onerror = function(event) {
+  console.error(event);
+};
+request.onsuccess = function(event) {
+  db = request.result;
+  let transaction = db.transaction(["files"]);
+  let store = transaction.objectStore("files");
+  let request2 = store.get(params.get('name'));
+  request2.onsuccess = function(event) {
+    document.getElementById('editor').innerHTML = markdownToHtml(request2.result.content);
+    codeEditors = document.getElementsByClassName('codeEditor');
+    for(i=0;i<codeEditors.length;i++){
+      CodeMirror.fromTextArea(codeEditors[i], {
+        mode: 'text/'+codeEditors[i].getAttribute('data-language'),
+        theme: 'monokai',
+        lineNumbers: true,
+        readOnly: true,
+        extraKeys: {
+          'Ctrl-Space': 'autocomplete'
+        }
+      });
+    }
+  }
+};
+request.onupgradeneeded = function(event) {
+  let db = event.target.result;
+  db.createObjectStore("files", { keyPath: "name" });
+};
+
+
+
+function convertCodeBlocksToTextarea(markdownString) {
+  const codeBlockRegex = /```(\w+)\n([\s\S]*?)\n```/g;
+  let match;
+  let result = markdownString;
+
+  while ((match = codeBlockRegex.exec(markdownString)) !== null) {
+    const language = match[1];
+    const code = match[2];
+
+    const textarea = `<textarea data-language="${language}" class="codeEditor">${code}</textarea>`;
+    result = result.replace(match[0], textarea);
+  }
+
+  return result;
+}
+
+function markdownToHtml(markdown) {
+    // Convert headers
+    html = markdown.replace(/^###### (.*$)/gim, '<h6>$1</h6>')
+               .replace(/^##### (.*$)/gim, '<h5>$1</h5>')
+               .replace(/^#### (.*$)/gim, '<h4>$1</h4>')
+               .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+               .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+               .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+    // Convert bold and italic
+    html = html.replace(/\*\*\*(.*?)\*\*\*/gim, '<b><i>$1</i></b>') // bold and italic
+               .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>') // bold
+               .replace(/\*(.*?)\*/gim, '<i>$1</i>'); // italic
+
+    // Convert strikethrough
+    html = html.replace(/~~(.*?)~~/gim, '<del>$1</del>');
+
+    // Convert underline
+    html = html.replace(/__(.*?)__/gim, '<u>$1</u>');
+
+    // Convert background highlight
+    html = html.replace(/==(.*?)==/gim, '<mark style="border-radius: 0.5em">$1</mark>');
+
+    // Convert images
+    html = html.replace(/!\[(.*?)\]\((.*?)\)/gim, '<img style="width: 95%; border-radius: 1rem" src="$2"/>');
+
+    // Convert links
+    html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a style="color: skyblue; padding-bottom: 0.01rem; border-bottom: 0.1rem solid deepskyblue; text-decoration: none" href="$2">$1</a>');
+
+    // Convert blockquotes
+    html = html.replace(/^\> (.*)$/gim, '<blockquote>$1</blockquote>');
+
+    // Convert horizontal rules
+    html = html.replace(/^\s*[-*_]{3,}\s*$/gim, '<hr />');
+    
+    //code
+    html = convertCodeBlocksToTextarea(html);
+
+    // Line breaks
+    html = html.replace(/<(?!textarea)[^>]*>\n|[^<]\n(?!\/textarea>)/g, function(match) {
+      return match === '\n' ? '<br>' : match;
+    });
+
+    return html + '<br><br><br><br>';
+}
+</script>
