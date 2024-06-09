@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      padding: 0;
+      height: 100vh;
+      background-position: 100% 0%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #000, #000, #0e006b, #800080, #0045bf, #007ebd, #4a00ad, #00017d, #007ebd);
+      background-size: 500% 500%;
+      animation: gradientAnimation 6s ease;
+      animation-fill-mode: forwards;
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 100%;
+      }
+      100% {
+        background-position: 100% 0%;
+      }
+    }
+
+ 
+    #mainDiv {
+      width: 80%;
+      height: auto;
+      max-height: 80%;
+      position: fixed;
+      background-color: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(2px);
+      border-radius: 1em;
+      animation: load_in 0.96s ease;
+      overflow-y: auto;
+    }
+    @keyframes load_in {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    
+    .input {
+      width: 74%;
+      height: 3em;
+      padding-inline: 0.7em;
+      border: none;
+      border-radius: 0.5em;
+      background-color: rgba(255, 255, 255, 0.35);
+      color: black;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+    .input:hover {
+      backdrop-filter: blur(3px);
+      background-color: rgba(255, 255, 255, 0.4);
+      transition: all 0.2s ease-in-out;
+    }
+    .input:focus {
+      backdrop-filter: blur(4px);
+      background-color: rgba(255, 255, 255, 0.6);
+      transition: all 0.2s ease-in-out;
+    }
+    
+    
+    .btn {
+      width: 28%;
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+      height: 2.4rem;
+      border: none;
+      color: darkblue;
+      backdrop-filter: blur(2px);
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 0.5em;
+      transition: all 0.2s ease-in-out;
+    }
+    .btn:hover {
+      color: blue;
+      background-color: rgba(255, 255, 255, 0.45);
+      transition: all 0.15s ease-in-out;
+    }
+    .btn:active {
+      color: black;
+      background-color: rgba(150, 150, 150, 0.6);
+      transition: all 0.15s ease-in-out;
+    }
+    .btn:focus {
+      color: blue;
+      transition: all 0.15s ease-in-out;
+    }
+  </style>
+  <title>Login | BINKLINGS</title>
+</head>
+<body></body>
+  <div align="center" id="mainDiv">
+    <br>
+    <h2>BINKLINGS</h2>
+    <h4>Login To Your Account</h4>
+    <input id="login_username_email" class="input" placeholder="Username / Email"/>
+    <br><br>
+    <input id="login_password" type="password" class="input" placeholder="Password"/>
+    <br><br>
+    <div style="width: 100;">
+      <button class="btn"><b>Register</b></button>
+      <button class="btn"><b>Login</b></button>
+    </div>
+    <br><br>
+    <div style="width: 100%; left: 0px" align="center">
+      <a style="padding-bottom: 0.2px; border-bottom: 1px solid deepskyblue; color: skyblue; text-decoration: none;" href="">More options</a>
+    </div>
+    <br><br>
+  </div>
+</body>
+</html>
