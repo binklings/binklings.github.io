@@ -189,8 +189,8 @@ function pwdEncrypted(pwd){
         turnstile.render('#onediv', {
           sitekey: '0x4AAAAAAAcJLhtsZtmr4h5T',
           callback: function(token) {
-            console.log(`Challenge Success`);
-            registration(user, token);
+            console.log('Challenge Success - '+token);
+            registration(user, 'test');
           },
         });
       });
