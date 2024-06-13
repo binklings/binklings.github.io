@@ -77,7 +77,7 @@
 </head>
 <body bgcolor="black" style="display: flex; align-items: center; justify-content: center; font-family: Arial, Helvetica, sans-serif;">
   <canvas id="star" style="display: block; position: fixed;"></canvas>
-  <div id="onediv" style="width: 100%; left: 0px; height: 100%; top: 0px; color: white; overflow-y: auto; position: fixed; display: inline-block; text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);"></div>
+  <div id="onediv" style="width: 100%; left: 0px; height: 100%; top: 0px; color: white; overflow-y: auto; position: fixed; display: inline-block; text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); padding-bottom: 2.6rem;"></div>
 </body>
 <script>
 user = {email: null, password: null};
@@ -137,8 +137,8 @@ print(`<br><h3>Welcome to BINKLINGS</h3><h4>> By creating a BINKLINGS account an
 function a(){
   document.getElementById('a').disabled = true;
   document.getElementById('a').style.color = 'green';
-  document.getElementById('a').style.border = '1.6px solid green';
-  document.getElementById('a').innerText = 'I Agree \u2713';
+  document.getElementById('a').style.border = 'none';
+  document.getElementById('a').innerText = '> I Agree';
   print(`<h4>> Please provide your email address, which BINKLINGS uses as the identity basis for registering an account.</h4><input placeholder="Email"id="e"/><button id="b"onclick="b()">Confirm</button>`);
 }
 
@@ -146,7 +146,7 @@ function b(){
   email = document.getElementById('e');
   if(email.value.includes('@') && email.value.split('@')[1].includes('.')){
     user.email = email.value;
-    div.innerHTML = div.innerHTML + `<input style="color: green; border: 1.6px solid green" value="`+email.value+`" disabled/><button style="color: green; border: 1.6px solid green">\u2713</button>`;
+    div.innerHTML = div.innerHTML + `<input style="color: green; border: none" value="> `+email.value+`" disabled/><button style="color: green; border: 1px solid green">\u2713</button>`;
     document.getElementById('e').remove();
     document.getElementById('b').remove();
     print(`<h4>> Please set your login password.</h4><h5>Remember, once this password is stolen by someone else, that person can do almost anything to your account, including changing password and email directly, so please keep your password safe.</h5><input type="password"oninput="cs()"placeholder="Password"/><input placeholder="Confirm Pwd"type="password"/><h5 id="h">> *At least 8 characters</h5><button id="s"onclick="s()">Submit</button>`);
@@ -163,7 +163,7 @@ function s(){
       //encryptxxxxxxxxxxxx
       document.getElementById('s').disabled = true;
       document.getElementById('s').style.color = 'green';
-      document.getElementById('s').style.border = '1.6px solid green';
+      document.getElementById('s').style.border = 'none';
       encryptPwd(p.value);
     }else{
       alert("The confirmation password is not the same as the entered password");
@@ -177,20 +177,22 @@ function pwdEncrypted(pwd){
   p = document.querySelectorAll('input[type="password"]')[0];
   c = document.querySelectorAll('input[type="password"]')[1];
   user.password = pwd;
-  document.getElementById('s').innerText = 'Password encrypted \u2713';
+  document.getElementById('s').innerText = '> Password encrypted';
   c.remove();
   p.disabled = true;
   p.style.color = 'green';
-  p.style.border = '1.6px solid green';
-  print("<h4>Finally, we need to verify that you are a real person. It only takes a few seconds</h4>");
+  p.style.border = 'none';
+  print("<h4>> Finally, we need to verify that you are a real person. It only takes a few seconds</h4>");
   itvvf = setInterval(()=>{
     if(finished){
+      div.innerHTML = div.innerHTML + "<div id='cl' style='border: none; padding-left: 1rem'></div>";
       turnstile.ready(function () {
-        turnstile.render('#onediv', {
+        turnstile.render('#cl', {
           sitekey: '0x4AAAAAAAcJLhtsZtmr4h5T',
           callback: function(token) {
-            console.log('Challenge Success - '+token);
-            registration(user, 'test');
+            const tk = String(token);
+            console.log(`Challenge Success`);
+            registration(user, tk);
           },
         });
       });
