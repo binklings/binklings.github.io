@@ -81,6 +81,7 @@
 </body>
 <script>
 user = {email: null, password: null};
+var tk;
 
 div = document.getElementById('onediv');
 
@@ -190,8 +191,9 @@ function pwdEncrypted(pwd){
         turnstile.render('#cl', {
           sitekey: '0x4AAAAAAAcJLhtsZtmr4h5T',
           callback: function(token) {
-            const tk = String(token);
+            tk = token;
             console.log(`Challenge Success`);
+console.log(tk)
             registration(user, tk).catch((err) => {
               console.error('err: ', err);
             });
