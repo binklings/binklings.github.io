@@ -134,7 +134,7 @@ async function registration(data, cfToken){
     timestamp: Date.now(),
     email: data.email,
     pwd: data.password,
-    //challengeToken: cfToken
+    challengeToken: cfToken
   }
   const EncryptedData = await encryptData(publicKey, JSON.stringify(content));
   var xhr = new XMLHttpRequest();
