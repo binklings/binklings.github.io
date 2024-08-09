@@ -122,7 +122,7 @@ async function registration(data, cfToken){
   }
   const EncryptedData = await encryptData(JSON.stringify(content));
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://s.binklings.com/account/register?data=' + EncryptedData.ciphertext + '&k=' + EncryptedData.encryptedAesData, true);
+  xhr.open('GET', 'http://s.binklings.com/account/register?data=' + EncryptedData.ciphertext + '&k=' + EncryptedData.encryptedAesData, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       if(xhr.responseText == 'done'){
