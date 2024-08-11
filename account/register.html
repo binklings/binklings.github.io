@@ -206,7 +206,7 @@ console.log(tk)
 }
 
 function rs(link){
-  div.innerHTML += '<button onclick="window.open('+link+')">Register</button>';
+  div.innerHTML += '<button onclick="window.location.assign(\''+link+'\')">Register</button>';
 }
 function ce(err){
   print('<h4 style="color:red">'+err+'</h4>');
