@@ -132,7 +132,7 @@ async function registration(data, cfToken){
       }
     }else{
       if(xhr.readyState === XMLHttpRequest.DONE){
-        ce('Something went wrong. We tried to send a connection request to the BINKLINGS server, but received an error message: '+xhr.readyState+' '+xhr.responseText+' . If the problem continues, please contact support@binklings.com.'+'http://s.binklings.com/account/register?data=' + EncryptedData.ciphertext + '&k=' + EncryptedData.encryptedAesData);
+        ce('Something went wrong. We tried to send a connection request to the BINKLINGS server, but received an error message: '+xhr.readyState+' '+xhr.responseText+' . If the problem continues, please contact support@binklings.com.');
       }
     }
   };
