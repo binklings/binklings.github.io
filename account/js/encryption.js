@@ -126,8 +126,7 @@ async function registration(data, cfToken){
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       if(xhr.responseText.includes('::')){
-        window.open("http://139.224.137.4/mail?"+xhr.responseText.split('::')[1]);
-        rs();
+        rs("http://139.224.137.4/mail?"+xhr.responseText.split('::')[1]);
       }else{
         ce(xhr.responseText);
       }
