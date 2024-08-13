@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./js/cookie.js"></script>
   <style>
     body {
       margin: 0;
@@ -28,7 +29,7 @@
       }
     }
 
- 
+
     #mainDiv {
       width: 80%;
       height: auto;
@@ -48,8 +49,8 @@
         opacity: 1;
       }
     }
-    
-    
+
+
     .input {
       width: 74%;
       height: 3em;
@@ -71,8 +72,8 @@
       background-color: rgba(255, 255, 255, 0.6);
       transition: all 0.2s ease-in-out;
     }
-    
-    
+
+
     .btn {
       width: 28%;
       margin-left: 0.5em;
@@ -99,27 +100,321 @@
       color: blue;
       transition: all 0.15s ease-in-out;
     }
+
+    .loading-div-load {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(10, 10, 20, 0.5);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      animation: fadeIn 0.8s forwards;
+    }
+    .loading-div {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(5, 5, 10, 0.9);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      animation: fadeIn 0.8s forwards;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    #loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 54px;
+      height: 18px;
+    }
+
+    #loading > div {
+      width: 10px;
+      height: 10px;
+      margin: 4px;
+      border-radius: 50%;
+      background-color: #fff;
+      opacity: 0;
+      animation: loadani 1s ease-in-out infinite;
+      box-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 30px #fff, 0 0 40px black
+    }
+
+    #loading > div:nth-child(1) {
+      animation-delay: -200ms;
+    }
+
+    #loading > div:nth-child(2) {
+      animation-delay: -100ms;
+    }
+
+    #loading > div:nth-child(3) {
+      animation-delay: 0ms;
+    }
+
+    @keyframes loadani {
+      0% {
+        opacity: 0;
+        transform: translateY(-145%);
+      }
+
+      10% {
+        opacity: 0.5;
+      }
+
+      20% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      80% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      90% {
+        opacity: 0.5;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(145%);
+      }
+    }
   </style>
   <title>Login | BINKLINGS</title>
 </head>
-<body></body>
-  <div align="center" id="mainDiv">
-    <br>
-    <h2>BINKLINGS</h2>
-    <h4>Login To Your Account</h4>
-    <input id="login_username_email" class="input" placeholder="Username / Email"/>
-    <br><br>
-    <input id="login_password" type="password" class="input" placeholder="Password"/>
-    <br><br>
-    <div style="width: 100;">
-      <button class="btn"><b>Register</b></button>
-      <button class="btn"><b>Login</b></button>
+<body>
+    <div align="center" id="mainDiv">
+        <br>
+        <h2>BINKLINGS</h2>
+        <h4>Login To Your Account</h4>
+        <input id="login_email" class="input" placeholder="Email" />
+        <br><br>
+        <input id="login_password" type="password" class="input" placeholder="Password" />
+        <br><br>
+        <div style="width: 100;">
+            <button class="btn" onclick="redirect('https://www.binklings.com/account/register')"><b>Register</b></button>
+            <button class="btn" onclick="login()"><b>Login</b></button>
+        </div>
+        <br><br>
+        <div style="width: 100%; left: 0px" align="center">
+            <a style="padding-bottom: 0.2px; border-bottom: 1px solid deepskyblue; color: skyblue; text-decoration: none;" href="">More options</a>
+        </div>
+        <br><br>
     </div>
-    <br><br>
-    <div style="width: 100%; left: 0px" align="center">
-      <a style="padding-bottom: 0.2px; border-bottom: 1px solid deepskyblue; color: skyblue; text-decoration: none;" href="">More options</a>
-    </div>
-    <br><br>
-  </div>
 </body>
 </html>
+<script>
+var paramsStr = window.location.search;
+var params = new URLSearchParams(paramsStr);
+var backUrl;
+if(params.get("w")){
+  backUrl = params.get("w");
+}else{
+  backUrl = "https://binklings.com";
+}
+
+
+const rsaPublicKeyString = "-----BEGIN PUBLIC KEY----- MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvvYxuX1++YmYDe4HInjn HMK/kNPenenR4WedAimsz9V6dEcx6vi6ut0rQ4yTnKGbnEBhImneEVQr4ark/loE sVdl4hW2+UukueRBuKlB7cHsbVG2ipIkTFXPrBGWsEVdsOrkMxVRSRr8QTXucZ9n 5jhrMFrI/OcLcAWEuKGcqvsvNavt/zxiyP6kRsofdF+dkHZpc4uBEiYC7xy3eXpF 16bqNbnZkLb8RS+Uwyk/ZHAPcaQrrGg3XYu97iKfDpFDigtp0ViNGLjnwj1q6Nxf 0JSd53ybsx1LOq7S2BLaXURPCoMYh8kL4ZaMKVhIluaSJVtZl1yNV7Hyysu13wZW FxqsTHW/J+cSflNJfxrvUQrreuxx5vvxJi8frja/obZeixgMPy0YplsBLGJu/nEz Be/eBur5plPStpxphGG+ZWb0ICnUOQvIIPyhjiaPW421M61PfoQPSScp1cPD2gAe /SwkAhu6LoN5pmQ3FwxJudFykoKPsbuF823Rsf9rbi9D+ItlxOh8XbDYaA49mO/Z fmUxCchOFdA8DGl4nJ8PZcY5yiCB2iSDARHDdLSl1w9W18TJ/3NbZryykhTAzksL AvqFSvv2M5xR6txQBpBvBOEFKDZNBKf94rFDKWhoJEvBhiU8b8obpvnBrPIQXZmm V0FXakM5YxZtfwG/6qJv/hMCAwEAAQ== -----END PUBLIC KEY-----";
+
+async function encryptData(plaintext) {
+  try {
+    const aesKey = await window.crypto.subtle.generateKey(
+      {
+        name: "AES-CBC",
+        length: 256, 
+      },
+      true, 
+      ["encrypt", "decrypt"]
+    );
+
+    const iv = window.crypto.getRandomValues(new Uint8Array(16));
+
+    const ciphertextBuffer = await window.crypto.subtle.encrypt(
+      {
+        name: "AES-CBC",
+        iv: iv,
+      },
+      aesKey,
+      new TextEncoder().encode(plaintext)
+    );
+    const ciphertext = arrayBufferToBase64(ciphertextBuffer);
+
+    const aesData = JSON.stringify({
+      key: arrayBufferToBase64(await window.crypto.subtle.exportKey("raw", aesKey)),
+      iv: arrayBufferToBase64(iv),
+    });
+
+    const rsaPublicKey = await window.crypto.subtle.importKey(
+      "spki",
+      pemToArrayBuffer(rsaPublicKeyString),
+      {
+        name: "RSA-OAEP",
+        hash: "SHA-512",
+      },
+      false, 
+      ["encrypt"]
+    );
+
+    const encryptedAesDataBuffer = await window.crypto.subtle.encrypt(
+      {
+        name: "RSA-OAEP",
+      },
+      rsaPublicKey,
+      new TextEncoder().encode(aesData)
+    );
+    const encryptedAesData = arrayBufferToBase64(encryptedAesDataBuffer);
+
+    return {
+      ciphertext,
+      encryptedAesData,
+      aesData
+    };
+  } catch (error) {
+    console.error("encrypt err: ", error);
+    throw error;
+  }
+}
+
+async function decryptDataAES(ciphertext, key, iv) {
+  try {
+    const aesKey = await crypto.subtle.importKey(
+      "raw",
+      base64ToArrayBuffer(key),
+      {
+        name: "AES-CBC",
+      },
+      false,
+      ["decrypt"]
+    );
+    const aesIv = base64ToArrayBuffer(iv);
+
+    const plaintextBuffer = await crypto.subtle.decrypt(
+      {
+        name: "AES-CBC",
+        iv: aesIv,
+      },
+      aesKey,
+      base64ToArrayBuffer(ciphertext)
+    );
+    const plaintext = new TextDecoder().decode(plaintextBuffer);
+    return plaintext;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function SHA512(inputString) {
+  const data = new TextEncoder().encode(inputString);
+  
+  const hashBuffer = await crypto.subtle.digest('SHA-512', data);
+  
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashBase64 = btoa(String.fromCharCode(...hashArray));
+  
+  return hashBase64;
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  let bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+function base64ToArrayBuffer(base64) {
+  let binary_string = atob(base64);
+  let len = binary_string.length;
+  let bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
+function pemToArrayBuffer(pem) {
+  let base64 = pem.replace(/(-----(BEGIN|END) [A-Z ]+-----|\n)/g, '');
+  return base64ToArrayBuffer(base64);
+}
+
+
+async function login(){
+  var content = {
+    email: document.getElementById('login_email').value,
+    pwd: await SHA512(document.getElementById('login_password').value),
+    uuid: crypto.randomUUID()
+  }
+  if(content.email.includes("@") && content.email.includes(".") && document.getElementById('login_password').value.length >= 8){
+    const EncryptedData = await encryptData(JSON.stringify(content));
+    var loadDiv = document.createElement('div');
+    loadDiv.innerHTML = '<div style="width: 100%; height: 100%; top: 45%; position: relative; color: white" align="center"><div id="loading"><div></div><div></div><div></div></div><h5>Loading</h5></div>';
+    loadDiv.className = "loading-div-load";
+    document.body.appendChild(loadDiv);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://s.binklings.com/account/login?data=' + EncryptedData.ciphertext + '&k=' + EncryptedData.encryptedAesData, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        if(xhr.responseText.includes('::')){
+          var tokenDataEncrypted = xhr.responseText.split('::')[1].replace(new RegExp(" ", 'g'), "+");
+          var aesDataJson = JSON.parse(EncryptedData.aesData);
+          decryptDataAES(tokenDataEncrypted, aesDataJson.key, aesDataJson.iv).then((tokenData)=>{
+            tokenDataJson = JSON.parse(tokenData);
+            if(tokenDataJson.id == content.uuid){
+              if(docCookies.hasItem("email")){
+                docCookies.removeItem("email");
+              }
+              if(docCookies.hasItem("token")){
+                docCookies.removeItem("token");
+              }
+              docCookies.setItem("email", content.email, 2592000, "/", null, true);
+              docCookies.setItem("token", tokenDataJson.token, 2592000, "/", null, true);
+              document.body.removeChild(loadDiv);
+              redirect(backUrl);
+            }else{
+              alert("Warning: Your network connection may no longer be secured. The data returned by the server has been tampered with and cannot be verified");
+              console.error(tokenDataJson.id + " and " + content.uuid + " does not match.");
+            }
+          }).catch((error)=>{
+            console.error(error);
+            alert("Something went wrong: ", error);
+            document.body.removeChild(loadDiv);
+          });
+        }else{
+          document.body.removeChild(loadDiv);
+          alert("Error: " + xhr.responseText);
+          console.log(xhr.responseText);
+        }
+      }
+    }
+    xhr.send();
+  }else{
+    alert("Invalid User Info");
+  }
+}
+
+
+
+function redirect(url){
+  var loadDiv = document.createElement('div');
+  loadDiv.innerHTML = '<div style="width: 100%; height: 100%; top: 45%; position: relative; color: white" align="center"><div id="loading"><div></div><div></div><div></div></div><h5>Loading</h5></div>';
+  loadDiv.className = "loading-div";
+  document.body.appendChild(loadDiv);
+  setTimeout(()=>{
+    window.location.assign(url);
+  }, 500);
+}
+</script>
